@@ -148,7 +148,7 @@ const Home = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <img 
-            src="/Deepansh.png" 
+            src="/Deepansh.jpg" 
             alt="Deepansh Tyagi" 
           />
         </ProfileImage>
