@@ -6,8 +6,16 @@ const PageContainer = styled.div`
   min-height: 100vh;
   padding: 6rem 2rem 2rem;
   
+  @media (max-width: ${props => props.theme.breakpoints.lg}) {
+    padding: 6rem 1.5rem 1.5rem;
+  }
+  
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 4rem 1rem 1rem;
+    padding: 5rem 1rem 1rem;
+  }
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 4rem 0.75rem 0.75rem;
   }
 `;
 

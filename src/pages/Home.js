@@ -12,17 +12,22 @@ const HomeContainer = styled.div`
   
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     padding: 1.5rem;
-    padding-top: 70px;
+    padding-top: 90px;
   }
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     padding: 1rem;
-    padding-top: 70px;
+    padding-top: 90px;
   }
   
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 0.75rem;
+    padding-top: 80px;
+  }
+  
+  @media (max-width: 400px) {
     padding: 0.5rem;
-    padding-top: 60px;
+    padding-top: 70px;
   }
 `;
 
