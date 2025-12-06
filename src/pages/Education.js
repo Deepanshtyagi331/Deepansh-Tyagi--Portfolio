@@ -4,12 +4,11 @@ import { motion } from 'framer-motion';
 import { FaGraduationCap, FaCalendarAlt, FaCertificate } from 'react-icons/fa';
 
 const PageContainer = styled.div`
-  padding-left: 250px;
   min-height: 100vh;
+  padding: 6rem 2rem 2rem;
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding-left: 0;
-    padding-top: 70px;
+    padding: 4rem 1rem 1rem;
   }
 `;
 
@@ -17,11 +16,6 @@ const ContentWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 2rem 1rem;
-  }
 `;
 
 const SectionTitle = styled(motion.h1)`
@@ -29,6 +23,10 @@ const SectionTitle = styled(motion.h1)`
   margin-bottom: 2rem;
   position: relative;
   display: inline-block;
+  background: ${props => props.theme.colors.gradient};
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   
   &:after {
     content: '';
@@ -46,6 +44,10 @@ const SubSectionTitle = styled(motion.h2)`
   font-size: 2rem;
   margin: 2rem 0;
   color: ${props => props.theme.colors.primary};
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.7rem;
+  }
 `;
 
 const EducationGrid = styled.div`
@@ -60,12 +62,12 @@ const EducationGrid = styled.div`
 `;
 
 const EducationCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.1);
+  background: ${props => props.theme.colors.cardBg};
   backdrop-filter: blur(10px);
   border-radius: 20px;
   overflow: hidden;
   box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   height: 100%;
 `;
 
@@ -80,11 +82,19 @@ const CardHeader = styled.div`
   svg {
     font-size: 2rem;
   }
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.2rem;
+  }
 `;
 
 const CardTitle = styled.h3`
   font-size: 1.5rem;
   margin-bottom: 0.25rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.3rem;
+  }
 `;
 
 const CardSubtitle = styled.p`
@@ -94,6 +104,10 @@ const CardSubtitle = styled.p`
 
 const CardContent = styled.div`
   padding: 1.5rem;
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.2rem;
+  }
 `;
 
 const CardInfo = styled.div`
@@ -111,6 +125,8 @@ const CardInfo = styled.div`
 const CardDescription = styled.p`
   font-size: 1rem;
   line-height: 1.6;
+  color: ${props => props.theme.colors.text};
+  margin-bottom: 0.5rem;
 `;
 
 const container = {
@@ -132,23 +148,24 @@ const Education = () => {
   const education = [
     {
       id: 1,
-      degree: "B. Tech (Computer Science Engineering)",
-      specialization: "Artificial Intelligence and Machine Learning",
+      degree: "Bachelor of Technology",
+      specialization: "Artificial Intelligence",
       institution: "NITRA Technical Campus, Ghaziabad",
-      period: "Nov 2022-Ongoing"
+      period: "Nov 2022 - Ongoing",
+      description: "Comprehensive education in AI fundamentals, machine learning, and modern software development practices."
     },
     {
       id: 2,
       degree: "Intermediate",
       institution: "Lady A Singhania Ednl Academy, Jhalawar, Rajasthan",
-      period: "Apr 2020-Mar 2021",
+      period: "Apr 2020 - Mar 2021",
       score: "Percentage: 70%"
     },
     {
       id: 3,
       degree: "Highschool",
       institution: "Holy Child Academy, Bagpath, Uttar Pradesh",
-      period: "Apr 2018-Mar 2019",
+      period: "Apr 2018 - Mar 2019",
       score: "Percentage: 75%"
     }
   ];
@@ -156,16 +173,23 @@ const Education = () => {
   const certifications = [
     {
       id: 1,
-      title: "Advanced Python Course",
-      issuer: "Udemy",
-      period: "Nov 2024-Jan 2025",
-      description: "Completed an intensive Advanced Python training program focusing on object-oriented programming, decorators, generators, and multithreading. Built scalable Python applications with in-depth understanding of memory management, performance tuning, and error handling."
+      title: "Software Engineering",
+      issuer: "J.P. Morgan Job Simulation",
+      period: "Completed",
+      description: "Completed intensive software engineering simulation program, gaining practical experience in enterprise-level development practices."
     },
     {
       id: 2,
+      title: "Advanced Python Course",
+      issuer: "Udemy",
+      period: "Nov 2024 - Jan 2025",
+      description: "Completed an intensive Advanced Python training program focusing on object-oriented programming, decorators, generators, and multithreading."
+    },
+    {
+      id: 3,
       title: "Python Training Program",
       issuer: "Intershala",
-      period: "July 2023-Aug 2023",
+      period: "July 2023 - Aug 2023",
       description: "Completed a comprehensive Basic Python Training Program covering core programming fundamentals including variables, data types, loops, functions, and file handling."
     }
   ];
@@ -210,6 +234,7 @@ const Education = () => {
                   <span>{edu.period}</span>
                 </CardInfo>
                 <CardDescription>{edu.institution}</CardDescription>
+                {edu.description && <CardDescription>{edu.description}</CardDescription>}
                 {edu.score && <CardDescription>{edu.score}</CardDescription>}
               </CardContent>
             </EducationCard>

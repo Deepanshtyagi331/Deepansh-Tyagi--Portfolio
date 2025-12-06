@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaPhone, FaLinkedin, FaGithub } from 'react-icons/fa';
+import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaMapMarkerAlt } from 'react-icons/fa';
 
 const PageContainer = styled.div`
-  padding-left: 250px;
   min-height: 100vh;
+  padding: 6rem 2rem 2rem;
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding-left: 0;
-    padding-top: 70px;
+    padding: 4rem 1rem 1rem;
   }
 `;
 
@@ -17,11 +16,6 @@ const ContentWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 2rem 1rem;
-  }
 `;
 
 const SectionTitle = styled(motion.h1)`
@@ -29,6 +23,10 @@ const SectionTitle = styled(motion.h1)`
   margin-bottom: 2rem;
   position: relative;
   display: inline-block;
+  background: ${props => props.theme.colors.gradient};
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   
   &:after {
     content: '';
@@ -53,27 +51,39 @@ const ContactGrid = styled.div`
 `;
 
 const ContactInfo = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.1);
+  background: ${props => props.theme.colors.cardBg};
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
   box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.5rem;
+  }
 `;
 
 const ContactForm = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.1);
+  background: ${props => props.theme.colors.cardBg};
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
   box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.5rem;
+  }
 `;
 
 const ContactHeading = styled.h3`
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: ${props => props.theme.colors.primary};
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.5rem;
+  }
 `;
 
 const ContactItem = styled.div`
@@ -85,15 +95,22 @@ const ContactItem = styled.div`
   svg {
     font-size: 1.5rem;
     color: ${props => props.theme.colors.secondary};
+    min-width: 1.5rem;
   }
   
   a {
     color: ${props => props.theme.colors.text};
     transition: color 0.3s ease;
+    text-decoration: none;
     
     &:hover {
       color: ${props => props.theme.colors.primary};
     }
+  }
+  
+  p {
+    margin: 0;
+    color: ${props => props.theme.colors.text};
   }
 `;
 
@@ -105,14 +122,15 @@ const Label = styled.label`
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
+  color: ${props => props.theme.colors.text};
 `;
 
 const Input = styled.input`
   width: 100%;
   padding: 0.75rem;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 30, 46, 0.5);
   color: ${props => props.theme.colors.text};
   font-family: ${props => props.theme.fonts.main};
   font-size: 1rem;
@@ -128,8 +146,8 @@ const TextArea = styled.textarea`
   width: 100%;
   padding: 0.75rem;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(30, 30, 46, 0.5);
   color: ${props => props.theme.colors.text};
   font-family: ${props => props.theme.fonts.main};
   font-size: 1rem;
@@ -153,10 +171,11 @@ const SubmitButton = styled.button`
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
   
   &:hover {
     transform: translateY(-3px);
-    box-shadow: ${props => props.theme.shadows.medium};
+    box-shadow: ${props => props.theme.shadows.glow};
   }
 `;
 
@@ -236,7 +255,7 @@ const Contact = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Contact Me
+          Let's Connect
         </SectionTitle>
         
         <ContactGrid>
@@ -255,6 +274,11 @@ const Contact = () => {
             <ContactItem>
               <FaPhone />
               <a href="tel:+917728076303">+91 7728076303</a>
+            </ContactItem>
+            
+            <ContactItem>
+              <FaMapMarkerAlt />
+              <p>Ghaziabad, Uttar Pradesh, India</p>
             </ContactItem>
             
             <ContactItem>
@@ -288,6 +312,7 @@ const Contact = () => {
                   name="name" 
                   value={formData.name}
                   onChange={handleChange}
+                  placeholder="Your name"
                 />
               </FormGroup>
               
@@ -299,6 +324,7 @@ const Contact = () => {
                   name="email" 
                   value={formData.email}
                   onChange={handleChange}
+                  placeholder="Your email"
                 />
               </FormGroup>
               
@@ -309,6 +335,7 @@ const Contact = () => {
                   name="message" 
                   value={formData.message}
                   onChange={handleChange}
+                  placeholder="Your message"
                 />
               </FormGroup>
               

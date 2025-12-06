@@ -8,12 +8,11 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const PageContainer = styled.div`
-  padding-left: 250px;
   min-height: 100vh;
+  padding: 6rem 2rem 2rem;
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding-left: 0;
-    padding-top: 70px;
+    padding: 4rem 1rem 1rem;
   }
 `;
 
@@ -21,11 +20,6 @@ const ContentWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 4rem 2rem;
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 2rem 1rem;
-  }
 `;
 
 const SectionTitle = styled(motion.h1)`
@@ -33,6 +27,10 @@ const SectionTitle = styled(motion.h1)`
   margin-bottom: 2rem;
   position: relative;
   display: inline-block;
+  background: ${props => props.theme.colors.gradient};
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   
   &:after {
     content: '';
@@ -58,18 +56,26 @@ const SkillsGrid = styled.div`
 `;
 
 const SkillsCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.1);
+  background: ${props => props.theme.colors.cardBg};
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
   box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.5rem;
+  }
 `;
 
 const SkillsHeading = styled.h2`
   font-size: 1.8rem;
   margin-bottom: 1.5rem;
   color: ${props => props.theme.colors.primary};
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1.5rem;
+  }
 `;
 
 const SkillsList = styled.ul`
@@ -82,6 +88,7 @@ const SkillItem = styled.li`
   padding-left: 1.5rem;
   margin-bottom: 0.75rem;
   font-size: 1.1rem;
+  color: ${props => props.theme.colors.text};
   
   &:before {
     content: '•';
@@ -90,16 +97,41 @@ const SkillItem = styled.li`
     left: 0;
     font-size: 1.2rem;
   }
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    font-size: 1rem;
+  }
 `;
 
 const ChartContainer = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.1);
+  background: ${props => props.theme.colors.cardBg};
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2rem;
   margin-top: 2rem;
   box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  @media (max-width: ${props => props.theme.breakpoints.md}) {
+    padding: 1.5rem;
+  }
+`;
+
+const SkillCategory = styled.div`
+  margin-bottom: 2rem;
+  
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+const CategoryTitle = styled.h3`
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+  color: ${props => props.theme.colors.light};
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const container = {
@@ -119,11 +151,11 @@ const item = {
 
 const Skills = () => {
   const chartData = {
-    labels: ['Python', 'SQL', 'Data Analysis', 'Streamlit', 'Flask', 'Pandas', 'Power BI', 'Excel'],
+    labels: ['Python', 'Node.js', 'MongoDB', 'SQL', 'REST APIs', 'Data Analysis', 'React', 'Git'],
     datasets: [
       {
         label: 'Proficiency Level',
-        data: [90, 85, 80, 75, 70, 85, 80, 75],
+        data: [90, 85, 80, 75, 85, 80, 70, 75],
         backgroundColor: [
           'rgba(108, 92, 231, 0.7)',
           'rgba(0, 206, 201, 0.7)',
@@ -158,7 +190,7 @@ const Skills = () => {
       title: {
         display: true,
         text: 'Skills Proficiency',
-        color: '#2d3436',
+        color: '#f0f0f0',
         font: {
           size: 18,
           family: "'Montserrat', sans-serif",
@@ -171,9 +203,21 @@ const Skills = () => {
         beginAtZero: true,
         max: 100,
         ticks: {
+          color: '#f0f0f0',
           callback: function(value) {
             return value + '%';
           }
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
+        }
+      },
+      x: {
+        ticks: {
+          color: '#f0f0f0'
+        },
+        grid: {
+          color: 'rgba(255, 255, 255, 0.1)'
         }
       }
     }
@@ -197,40 +241,47 @@ const Skills = () => {
           animate="show"
         >
           <SkillsCard variants={item}>
-            <SkillsHeading>Programming Languages</SkillsHeading>
-            <SkillsList>
-              <SkillItem>Python</SkillItem>
-              <SkillItem>SQL</SkillItem>
-              <SkillItem>HTML/CSS</SkillItem>
-              <SkillItem>JavaScript</SkillItem>
-              <SkillItem>Node.js</SkillItem>
-            </SkillsList>
+            <SkillCategory>
+              <CategoryTitle>Backend Technologies</CategoryTitle>
+              <SkillsList>
+                <SkillItem>Node.js & Express</SkillItem>
+                <SkillItem>Python & Flask/Django</SkillItem>
+                <SkillItem>REST API Development</SkillItem>
+                <SkillItem>Microservices Architecture</SkillItem>
+              </SkillsList>
+            </SkillCategory>
             
-            <SkillsHeading>Frameworks & Libraries</SkillsHeading>
-            <SkillsList>
-              <SkillItem>Flask</SkillItem>
-              <SkillItem>Streamlit</SkillItem>
-              <SkillItem>Pandas</SkillItem>
-              <SkillItem>NumPy</SkillItem>
-              <SkillItem>Matplotlib/Plotly</SkillItem>
-              <SkillItem>Scikit-learn</SkillItem>
-              <SkillItem>TensorFlow</SkillItem>
-              <SkillItem>MongoDB</SkillItem>
-            </SkillsList>
+            <SkillCategory>
+              <CategoryTitle>Database Systems</CategoryTitle>
+              <SkillsList>
+                <SkillItem>MongoDB (NoSQL)</SkillItem>
+                <SkillItem>PostgreSQL/MySQL (SQL)</SkillItem>
+                <SkillItem>Database Design</SkillItem>
+                <SkillItem>Query Optimization</SkillItem>
+              </SkillsList>
+            </SkillCategory>
           </SkillsCard>
           
           <SkillsCard variants={item}>
-            <SkillsHeading>Tools & Technologies</SkillsHeading>
-            <SkillsList>
-              <SkillItem>Git/GitHub</SkillItem>
-              <SkillItem>VS Code</SkillItem>
-              <SkillItem>SQLite</SkillItem>
-              <SkillItem>PostgreSQL</SkillItem>
-              <SkillItem>Power BI</SkillItem>
-              <SkillItem>Excel</SkillItem>
-              <SkillItem>Jupyter Notebooks</SkillItem>
-              <SkillItem>PyCharm</SkillItem>
-            </SkillsList>
+            <SkillCategory>
+              <CategoryTitle>Development Practices</CategoryTitle>
+              <SkillsList>
+                <SkillItem>Version Control (Git)</SkillItem>
+                <SkillItem>Agile Methodologies</SkillItem>
+                <SkillItem>Code Review</SkillItem>
+                <SkillItem>Testing & Debugging</SkillItem>
+              </SkillsList>
+            </SkillCategory>
+            
+            <SkillCategory>
+              <CategoryTitle>Data & Analytics</CategoryTitle>
+              <SkillsList>
+                <SkillItem>Data Analysis & Visualization</SkillItem>
+                <SkillItem>Pandas, NumPy</SkillItem>
+                <SkillItem>Power BI</SkillItem>
+                <SkillItem>Statistical Analysis</SkillItem>
+              </SkillsList>
+            </SkillCategory>
           </SkillsCard>
         </SkillsGrid>
         

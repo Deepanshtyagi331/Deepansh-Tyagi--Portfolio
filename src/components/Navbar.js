@@ -1,157 +1,441 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
-import { FaHome, FaUser, FaCode, FaChartBar, FaBriefcase, FaGraduationCap, FaEnvelope } from 'react-icons/fa';
+import styled, { keyframes } from 'styled-components';
+import { motion } from 'framer-motion';
+import { 
+  FaHome, 
+  FaUser, 
+  FaCode, 
+  FaChartBar, 
+  FaBriefcase, 
+  FaGraduationCap, 
+  FaEnvelope, 
+  FaBars, 
+  FaTimes,
+  FaGithub,
+  FaLinkedin,
+  FaTwitter
+} from 'react-icons/fa';
+
+const fadeIn = keyframes`
+  from { 
+    opacity: 0; 
+    transform: translateY(-10px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+`;
+
+// Define NavContainer before Nav since it's referenced in Nav
+const NavContainer = styled.div`
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 90px;
+  transition: var(--transition);
+  
+  @media (max-width: 1024px) {
+    padding: 0 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+    height: 70px;
+  }
+`;
 
 const Nav = styled.nav`
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  height: 100vh;
-  width: 250px;
   position: fixed;
   top: 0;
   left: 0;
-  padding: 2rem 0;
-  display: flex;
-  flex-direction: column;
-  z-index: 100;
+  right: 0;
+  z-index: 1000;
+  background: ${props => props.theme.colors.navBg};
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   box-shadow: ${props => props.theme.shadows.medium};
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    width: 100%;
-    height: auto;
-    position: sticky;
-    top: 0;
-    padding: 1rem;
-    flex-direction: row;
-    justify-content: center;
-    overflow-x: auto;
-  }
-`;
-
-const Logo = styled.div`
-  padding: 0 2rem;
-  margin-bottom: 2rem;
+  transition: ${props => props.theme.transitions.standard};
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transform: translateY(0);
   
-  h2 {
-    background: ${props => props.theme.colors.gradient};
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-weight: 700;
+  &.scrolled {
+    padding: 0.5rem 0;
+    background: rgba(15, 15, 26, 0.95);
+    box-shadow: ${props => props.theme.shadows.large};
+    
+    ${NavContainer} {
+      height: 70px;
+    }
   }
-
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    display: none;
-  }
-`;
-
-const NavLinks = styled.div`
-  display: flex;
-  flex-direction: column;
   
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
+  &.hidden {
+    transform: translateY(-100%);
+  }
+  
+  @media (max-width: 768px) {
+    background: ${props => props.theme.colors.dark};
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    
+    &.scrolled {
+      padding: 0;
+    }
   }
 `;
 
-const NavItem = styled(Link)`
+const Logo = styled(motion(Link))`
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: transparent;
+  text-decoration: none;
+  background: ${props => props.theme.colors.gradient};
+  -webkit-background-clip: text;
+  background-clip: text;
   display: flex;
   align-items: center;
-  padding: 0.75rem 2rem;
-  color: ${props => props.active ? props.theme.colors.primary : props.theme.colors.text};
-  font-weight: ${props => props.active ? '600' : '400'};
-  transition: all 0.3s ease;
+  gap: 0.5rem;
+  transition: ${props => props.theme.transitions.standard};
   position: relative;
+  z-index: 1001;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: ${props => props.theme.colors.gradient};
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover {
+    transform: translateY(-2px);
+    
+    &::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+  }
+`;
+
+const MobileMenuButton = styled(motion.button)`
+  display: none;
+  background: none;
+  border: none;
+  color: ${props => props.theme.colors.light};
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: ${props => props.theme.transitions.standard};
   
   &:hover {
     color: ${props => props.theme.colors.primary};
     background: rgba(255, 255, 255, 0.1);
   }
   
-  ${props => props.active && `
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+`;
+
+const NavLinks = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  
+  @media (max-width: 768px) {
+    position: fixed;
+    top: 0;
+    right: ${({ $isOpen }) => ($isOpen ? '0' : '-100%')};
+    width: 80%;
+    max-width: 320px;
+    height: 100vh;
+    background: ${props => props.theme.colors.dark};
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+    padding: 2rem 0;
+    z-index: 1000;
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    
     &::before {
       content: '';
       position: absolute;
-      left: 0;
       top: 0;
-      height: 100%;
-      width: 4px;
-      background: ${props.theme.colors.gradient};
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     }
-  `}
-  
-  svg {
-    margin-right: 1rem;
-    font-size: 1.2rem;
   }
   
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 0.5rem;
+  @media (max-width: 480px) {
+    width: 90%;
+  }
+`;
+
+const NavItem = styled(motion(Link))`
+  color: ${props => props.$active ? props.theme.colors.primary : props.theme.colors.text};
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: ${props => props.theme.transitions.standard};
+  position: relative;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: ${props => props.theme.colors.gradient};
+    transform: scaleX(${props => props.$active ? '1' : '0'});
+    transform-origin: ${props => props.$active ? 'left' : 'right'};
+    transition: transform 0.3s ease;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${props => props.theme.colors.gradient};
+    opacity: 0;
+    z-index: -1;
+    border-radius: 0.25rem;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    color: ${props => props.theme.colors.light};
+    transform: translateY(-2px);
     
-    span {
+    &::before {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+    
+    &::after {
+      opacity: 0.1;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    width: 100%;
+    justify-content: center;
+    border-radius: 0;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.03);
+      transform: none;
+    }
+    
+    &::before {
       display: none;
     }
     
-    svg {
-      margin-right: 0;
-      font-size: 1.5rem;
+    &::after {
+      display: none;
     }
+  }
+`;
+
+const SocialLinks = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  
+  @media (min-width: 769px) {
+    display: none;
+  }
+  
+  a {
+    color: ${props => props.theme.colors.text};
+    font-size: 1.25rem;
+    transition: ${props => props.theme.transitions.standard};
+    opacity: 0.7;
     
-    ${props => props.active && `
-      &::before {
-        left: 0;
-        top: auto;
-        bottom: 0;
-        height: 3px;
-        width: 100%;
-      }
-    `}
+    &:hover {
+      color: ${props => props.theme.colors.primary};
+      opacity: 1;
+      transform: translateY(-2px);
+    }
   }
 `;
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
   const path = location.pathname;
-  
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+    document.body.style.overflow = !isOpen ? 'hidden' : 'auto';
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down
+        setHidden(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setHidden(false);
+      }
+      
+      setScrolled(currentScrollY > 10);
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.body.style.overflow = 'auto';
+    };
+  }, [lastScrollY]);
+
+  // Close mobile menu when route changes
+  useEffect(() => {
+    setIsOpen(false);
+    document.body.style.overflow = 'auto';
+  }, [path]);
+
+  // Close menu on ESC key press
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape' && isOpen) {
+        setIsOpen(false);
+        document.body.style.overflow = 'auto';
+      }
+    };
+
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [isOpen]);
+
+  // Add animation delay to nav items
+  const navItems = [
+    { to: "/", icon: <FaHome />, text: "Home" },
+    { to: "/about", icon: <FaUser />, text: "About" },
+    { to: "/projects", icon: <FaCode />, text: "Projects" },
+    { to: "/skills", icon: <FaChartBar />, text: "Skills" },
+    { to: "/experience", icon: <FaBriefcase />, text: "Experience" },
+    { to: "/education", icon: <FaGraduationCap />, text: "Education" },
+    { to: "/contact", icon: <FaEnvelope />, text: "Contact", className: "contact-btn" },
+  ];
+
   return (
-    <Nav>
-      <Logo>
-        <h2>Deepansh Tyagi</h2>
-      </Logo>
-      <NavLinks>
-        <NavItem to="/" active={path === '/'}>
-          <FaHome />
-          <span>Home</span>
-        </NavItem>
-        <NavItem to="/about" active={path === '/about'}>
-          <FaUser />
-          <span>About Me</span>
-        </NavItem>
-        <NavItem to="/projects" active={path === '/projects'}>
-          <FaCode />
-          <span>Projects</span>
-        </NavItem>
-        <NavItem to="/skills" active={path === '/skills'}>
-          <FaChartBar />
-          <span>Skills</span>
-        </NavItem>
-        <NavItem to="/experience" active={path === '/experience'}>
-          <FaBriefcase />
-          <span>Experience</span>
-        </NavItem>
-        <NavItem to="/education" active={path === '/education'}>
-          <FaGraduationCap />
-          <span>Education</span>
-        </NavItem>
-        <NavItem to="/contact" active={path === '/contact'}>
-          <FaEnvelope />
-          <span>Contact</span>
-        </NavItem>
-      </NavLinks>
+    <Nav className={`${scrolled ? 'scrolled' : ''} ${hidden ? 'hidden' : ''}`}>
+      <NavContainer>
+        <Logo 
+          to="/"
+          whileHover={{ y: -3, scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+          <span>DT</span>
+        </Logo>
+        
+        <MobileMenuButton 
+          onClick={toggleMenu} 
+          aria-label={isOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={isOpen}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          transition={{ type: "spring", stiffness: 400, damping: 17 }}
+        >
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </MobileMenuButton>
+        
+        <NavLinks $isOpen={isOpen}>
+          {navItems.map((item, index) => (
+            <NavItem 
+              key={item.to} 
+              to={item.to} 
+              $active={path === item.to}
+              className={item.className}
+              style={{
+                animation: isOpen ? `${fadeIn} 0.3s ease-out ${index * 0.05}s both` : 'none'
+              }}
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              {item.icon}
+              <span>{item.text}</span>
+            </NavItem>
+          ))}
+          
+          <SocialLinks>
+            <motion.a 
+              href="https://github.com/Deepanshtyagi331" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="GitHub"
+              whileHover={{ y: -5, scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <FaGithub />
+            </motion.a>
+            <motion.a 
+              href="http://www.linkedin.com/in/deepansh-tyagi-03110927a" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="LinkedIn"
+              whileHover={{ y: -5, scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <FaLinkedin />
+            </motion.a>
+            <motion.a 
+              href="https://twitter.com/yourusername" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Twitter"
+              whileHover={{ y: -5, scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+              <FaTwitter />
+            </motion.a>
+          </SocialLinks>
+        </NavLinks>
+      </NavContainer>
     </Nav>
   );
 };
