@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaMapMarkerAlt } from 'react-icons/fa';
+import emailjs from '@emailjs/browser';
+import { EMAILJS_CONFIG } from '../config/emailjs';
+import { EnhancedCard, AnimatedButton } from '../components/UIComponents';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -58,31 +61,9 @@ const ContactGrid = styled.div`
   }
 `;
 
-const ContactInfo = styled(motion.div)`
-  background: ${props => props.theme.colors.cardBg};
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 1.5rem;
-  }
-`;
+const ContactInfo = styled(EnhancedCard)``;
 
-const ContactForm = styled(motion.div)`
-  background: ${props => props.theme.colors.cardBg};
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 1.5rem;
-  }
-`;
+const ContactForm = styled(EnhancedCard)``;
 
 const ContactHeading = styled.h3`
   font-size: 1.8rem;
@@ -169,22 +150,12 @@ const TextArea = styled.textarea`
   }
 `;
 
-const SubmitButton = styled.button`
-  background: ${props => props.theme.colors.gradient};
-  color: white;
+const SubmitButton = styled(AnimatedButton)`
+  width: 100%;
   border: none;
-  border-radius: 8px;
-  padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  
-  &:hover {
-    transform: translateY(-3px);
-    box-shadow: ${props => props.theme.shadows.glow};
-  }
 `;
 
 const SuccessMessage = styled.div`
@@ -239,20 +210,43 @@ const Contact = () => {
       return;
     }
     
-    // In a real application, you would send the form data to a server here
-    // For now, we'll just simulate a successful submission
-    setFormStatus({
-      submitted: true,
-      success: true,
-      error: false
-    });
+    // Prepare template parameters
+    const templateParams = {
+      from_name: formData.name,
+      from_email: formData.email,
+      message: formData.message,
+      to_name: 'Deepansh Tyagi',
+    };
     
-    // Reset form after successful submission
-    setFormData({
-      name: '',
-      email: '',
-      message: ''
-    });
+    // Send email using EmailJS
+    emailjs.send(
+      EMAILJS_CONFIG.SERVICE_ID, 
+      EMAILJS_CONFIG.TEMPLATE_ID, 
+      templateParams, 
+      EMAILJS_CONFIG.PUBLIC_KEY
+    )
+      .then((result) => {
+        console.log(result.text);
+        setFormStatus({
+          submitted: true,
+          success: true,
+          error: false
+        });
+        
+        // Reset form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          message: ''
+        });
+      }, (error) => {
+        console.log(error.text);
+        setFormStatus({
+          submitted: true,
+          success: false,
+          error: true
+        });
+      });
   };
 
   return (
@@ -347,14 +341,20 @@ const Contact = () => {
                 />
               </FormGroup>
               
-              <SubmitButton type="submit">Submit</SubmitButton>
+              <SubmitButton 
+                            type="submit"
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                          >
+                            Submit
+                          </SubmitButton>
               
               {formStatus.submitted && formStatus.success && (
                 <SuccessMessage>Thank you for your message! I'll get back to you soon.</SuccessMessage>
               )}
               
               {formStatus.submitted && formStatus.error && (
-                <ErrorMessage>Please fill in all fields.</ErrorMessage>
+                <ErrorMessage>{formData.name && formData.email && formData.message ? 'Failed to send message. Please try again later.' : 'Please fill in all fields.'}</ErrorMessage>
               )}
             </form>
           </ContactForm>

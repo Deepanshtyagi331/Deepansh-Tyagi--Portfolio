@@ -275,6 +275,11 @@ const GlobalStyle = createGlobalStyle`
     to { opacity: 1; transform: translateY(0); }
   }
   
+  /* Page transition fade */
+  .page-transition {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
   /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 10px;

@@ -6,6 +6,13 @@ import { FaHome } from 'react-icons/fa';
 const BreadcrumbContainer = styled.nav`
   padding: 1rem 0;
   font-size: 0.9rem;
+  background: ${props => props.theme.colors.cardBg};
+  backdrop-filter: blur(10px);
+  border-radius: ${props => props.theme.borderRadius.md};
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  box-shadow: ${props => props.theme.shadows.small};
+  border: 1px solid rgba(255, 255, 255, 0.1);
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     padding: 0.5rem 0;
@@ -39,16 +46,21 @@ const BreadcrumbLink = styled(Link)`
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: ${props => props.theme.borderRadius.sm};
   
   &:hover {
     color: ${props => props.theme.colors.primary};
     opacity: 1;
+    background: rgba(108, 92, 231, 0.1);
+    transform: translateY(-1px);
   }
   
   &.active {
     color: ${props => props.theme.colors.primary};
     opacity: 1;
     font-weight: 500;
+    background: rgba(108, 92, 231, 0.1);
   }
 `;
 

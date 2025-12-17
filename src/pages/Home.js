@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaEnvelope, FaLinkedin, FaGithub, FaPhone } from 'react-icons/fa';
+import { FaEnvelope, FaLinkedin, FaGithub, FaPhone, FaDownload } from 'react-icons/fa';
+import { AnimatedButton, SectionTitle as EnhancedSectionTitle } from '../components/UIComponents';
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -52,6 +53,10 @@ const ContentWrapper = styled.div`
   
   @media (max-width: ${props => props.theme.breakpoints.sm}) {
     gap: 1.5rem;
+  }
+  
+  @media (max-width: 400px) {
+    gap: 1rem;
   }
 `;
 
@@ -165,6 +170,11 @@ const ProfileImage = styled(motion.div)`
       width: 200px;
       height: 200px;
     }
+    
+    @media (max-width: 400px) {
+      width: 150px;
+      height: 150px;
+    }
   }
 `;
 
@@ -208,6 +218,19 @@ const SocialIcon = styled(motion.a)`
     transition: transform 0.3s ease;
   }
   
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
   &:hover {
     color: white;
     transform: translateY(-5px);
@@ -220,6 +243,15 @@ const SocialIcon = styled(motion.a)`
     
     svg {
       transform: scale(1.2);
+    }
+  }
+  
+  &:active {
+    transform: translateY(-5px) scale(0.95);
+    
+    &::after {
+      width: 300px;
+      height: 300px;
     }
   }
   
@@ -237,7 +269,7 @@ const SocialIcon = styled(motion.a)`
   }
 `;
 
-const SectionTitle = styled.h3`
+const SectionTitle = styled(EnhancedSectionTitle)`
   font-size: 1.5rem;
   margin: 2rem 0 1rem 0;
   color: ${props => props.theme.colors.light};
@@ -292,6 +324,24 @@ const Home = () => {
             and scalable web solutions. Experienced in designing <Highlight>REST APIs</Highlight>, 
             <Highlight> database management</Highlight>, and modern development practices.
           </motion.p>
+          
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.7 }}
+          >
+            <AnimatedButton
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                // Download resume functionality
+                window.open('Deepanshtyagi Resume.pdf', '_blank');
+              }}
+            >
+              <FaDownload style={{ marginRight: '0.5rem' }} />
+              Download Resume
+            </AnimatedButton>
+          </motion.div>
           
           <motion.div
             initial={{ opacity: 0, y: 20 }}

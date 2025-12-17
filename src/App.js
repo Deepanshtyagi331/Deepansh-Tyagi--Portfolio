@@ -15,12 +15,12 @@ import Experience from './pages/Experience';
 import Education from './pages/Education';
 import Contact from './pages/Contact';
 
-function App() {
+function App({ themeMode, setThemeMode }) {
   return (
     <>
       <ScrollToTop />
       <BackgroundParticles />
-      <Navbar />
+      <Navbar themeMode={themeMode} setThemeMode={setThemeMode} />
       <div className="container">
         <Breadcrumb />
       </div>

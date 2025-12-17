@@ -15,6 +15,8 @@ import {
   FaGithub,
   FaLinkedin,
   FaTwitter,
+  FaSun,
+  FaMoon
 } from "react-icons/fa";
 
 /* -----------------------------------------
@@ -147,6 +149,7 @@ const NavItem = styled(motion(Link))`
   padding: 0.5rem 0.75rem;
   border-radius: 0.3rem;
   transition: 0.3s ease;
+  position: relative;
 
   ${({ $open, $delay }) =>
     $open &&
@@ -159,6 +162,25 @@ const NavItem = styled(motion(Link))`
     color: ${({ theme }) => theme.colors.primary};
   }
 
+  /* Active indicator */
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: ${({ theme }) => theme.colors.gradient};
+    border-radius: 2px;
+    transition: width 0.3s ease;
+  }
+
+  &[aria-current='page']::after,
+  &:hover::after {
+    width: 70%;
+  }
+
   @media (max-width: 768px) {
     width: 100%;
     justify-content: center;
@@ -166,6 +188,10 @@ const NavItem = styled(motion(Link))`
     &:hover {
       background: rgba(255, 255, 255, 0.08);
       transform: none;
+    }
+
+    &::after {
+      display: none;
     }
   }
 `;
@@ -183,6 +209,43 @@ const Backdrop = styled.div`
     background: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(3px);
     z-index: 998;
+  }
+`;
+
+/* -----------------------------------------
+   THEME TOGGLE BUTTON
+-------------------------------------------- */
+const ThemeToggle = styled.button`
+  background: none;
+  border: none;
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: ${({ theme }) => theme.transitions.standard};
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 20px;
+    right: 60px;
+  }
+  
+  @media (max-width: 400px) {
+    top: 15px;
+    right: 50px;
+    width: 35px;
+    height: 35px;
+    font-size: 1.1rem;
   }
 `;
 
@@ -213,7 +276,7 @@ const SocialLinks = styled.div`
 /* -----------------------------------------
    COMPONENT
 -------------------------------------------- */
-const Navbar = () => {
+const Navbar = ({ themeMode, setThemeMode }) => {
   const { pathname } = useLocation();
 
   const [menuOpen, setMenuOpen] = useState(false);
@@ -251,6 +314,31 @@ const Navbar = () => {
   useEffect(() => {
     setMenuOpen(false);
   }, [pathname]);
+
+  /* Smooth scrolling for anchor links */
+  useEffect(() => {
+    const handleClick = (e) => {
+      const target = e.target.closest('a');
+      if (target && target.getAttribute('href').startsWith('#')) {
+        e.preventDefault();
+        const id = target.getAttribute('href').substring(1);
+        const element = document.getElementById(id);
+        if (element) {
+          element.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      }
+    };
+
+    document.addEventListener('click', handleClick);
+    return () => document.removeEventListener('click', handleClick);
+  }, []);
+
+  const toggleTheme = () => {
+    setThemeMode(themeMode === 'dark' ? 'light' : 'dark');
+  };
 
   return (
     <Nav $hidden={hidden} className={scrolled ? "scrolled" : ""}>
@@ -291,6 +379,11 @@ const Navbar = () => {
             </a>
           </SocialLinks>
         </NavLinks>
+
+        {/* Theme Toggle Button */}
+        <ThemeToggle onClick={toggleTheme} aria-label="Toggle theme">
+          {themeMode === 'dark' ? <FaSun /> : <FaMoon />}
+        </ThemeToggle>
 
         <Backdrop $open={menuOpen} onClick={() => setMenuOpen(false)} />
       </NavContainer>

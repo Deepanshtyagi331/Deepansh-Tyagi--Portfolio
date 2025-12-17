@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { EnhancedCard, ProgressBar, ProgressFill } from '../components/UIComponents';
 
 // Register Chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -63,18 +64,7 @@ const SkillsGrid = styled.div`
   }
 `;
 
-const SkillsCard = styled(motion.div)`
-  background: ${props => props.theme.colors.cardBg};
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 2rem;
-  box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  
-  @media (max-width: ${props => props.theme.breakpoints.md}) {
-    padding: 1.5rem;
-  }
-`;
+const SkillsCard = styled(EnhancedCard)``;
 
 const SkillsHeading = styled.h2`
   font-size: 1.8rem;
@@ -92,23 +82,7 @@ const SkillsList = styled.ul`
 `;
 
 const SkillItem = styled.li`
-  position: relative;
-  padding-left: 1.5rem;
-  margin-bottom: 0.75rem;
-  font-size: 1.1rem;
-  color: ${props => props.theme.colors.text};
-  
-  &:before {
-    content: '•';
-    color: ${props => props.theme.colors.secondary};
-    position: absolute;
-    left: 0;
-    font-size: 1.2rem;
-  }
-  
-  @media (max-width: ${props => props.theme.breakpoints.sm}) {
-    font-size: 1rem;
-  }
+  margin-bottom: 1.5rem;
 `;
 
 const ChartContainer = styled(motion.div)`
@@ -252,20 +226,92 @@ const Skills = () => {
             <SkillCategory>
               <CategoryTitle>Backend Technologies</CategoryTitle>
               <SkillsList>
-                <SkillItem>Node.js & Express</SkillItem>
-                <SkillItem>Python & Flask/Django</SkillItem>
-                <SkillItem>REST API Development</SkillItem>
-                <SkillItem>Microservices Architecture</SkillItem>
+                <SkillItem>
+                  <div>Node.js & Express</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '85%' }}
+                      transition={{ duration: 1, delay: 0.2 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Python & Flask/Django</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '90%' }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>REST API Development</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '85%' }}
+                      transition={{ duration: 1, delay: 0.4 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Microservices Architecture</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '75%' }}
+                      transition={{ duration: 1, delay: 0.5 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
               </SkillsList>
             </SkillCategory>
             
             <SkillCategory>
               <CategoryTitle>Database Systems</CategoryTitle>
               <SkillsList>
-                <SkillItem>MongoDB (NoSQL)</SkillItem>
-                <SkillItem>PostgreSQL/MySQL (SQL)</SkillItem>
-                <SkillItem>Database Design</SkillItem>
-                <SkillItem>Query Optimization</SkillItem>
+                <SkillItem>
+                  <div>MongoDB (NoSQL)</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '80%' }}
+                      transition={{ duration: 1, delay: 0.2 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>PostgreSQL/MySQL (SQL)</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '75%' }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Database Design</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '80%' }}
+                      transition={{ duration: 1, delay: 0.4 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Query Optimization</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '70%' }}
+                      transition={{ duration: 1, delay: 0.5 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
               </SkillsList>
             </SkillCategory>
           </SkillsCard>
@@ -274,20 +320,92 @@ const Skills = () => {
             <SkillCategory>
               <CategoryTitle>Development Practices</CategoryTitle>
               <SkillsList>
-                <SkillItem>Version Control (Git)</SkillItem>
-                <SkillItem>Agile Methodologies</SkillItem>
-                <SkillItem>Code Review</SkillItem>
-                <SkillItem>Testing & Debugging</SkillItem>
+                <SkillItem>
+                  <div>Version Control (Git)</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '85%' }}
+                      transition={{ duration: 1, delay: 0.2 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Agile Methodologies</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '75%' }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Code Review</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '80%' }}
+                      transition={{ duration: 1, delay: 0.4 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Testing & Debugging</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '75%' }}
+                      transition={{ duration: 1, delay: 0.5 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
               </SkillsList>
             </SkillCategory>
             
             <SkillCategory>
               <CategoryTitle>Data & Analytics</CategoryTitle>
               <SkillsList>
-                <SkillItem>Data Analysis & Visualization</SkillItem>
-                <SkillItem>Pandas, NumPy</SkillItem>
-                <SkillItem>Power BI</SkillItem>
-                <SkillItem>Statistical Analysis</SkillItem>
+                <SkillItem>
+                  <div>Data Analysis & Visualization</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '80%' }}
+                      transition={{ duration: 1, delay: 0.2 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Pandas, NumPy</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '75%' }}
+                      transition={{ duration: 1, delay: 0.3 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Power BI</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '70%' }}
+                      transition={{ duration: 1, delay: 0.4 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
+                <SkillItem>
+                  <div>Statistical Analysis</div>
+                  <ProgressBar>
+                    <ProgressFill 
+                      initial={{ width: 0 }}
+                      animate={{ width: '75%' }}
+                      transition={{ duration: 1, delay: 0.5 }}
+                    />
+                  </ProgressBar>
+                </SkillItem>
               </SkillsList>
             </SkillCategory>
           </SkillsCard>

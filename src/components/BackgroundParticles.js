@@ -16,6 +16,21 @@ const float = keyframes`
   }
 `;
 
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+`;
+
 const Particle = styled.div`
   position: fixed;
   width: ${props => props.size}px;
@@ -29,11 +44,20 @@ const Particle = styled.div`
   z-index: -1;
   box-shadow: 0 0 10px ${props => props.glowColor};
   transition: all 0.3s ease;
+  cursor: pointer;
   
   &:hover {
     opacity: 0.8;
     transform: scale(1.5);
     z-index: 0;
+    animation: ${pulse} 1s ease infinite;
+  }
+  
+  /* Add subtle interaction on click */
+  &:active {
+    transform: scale(2);
+    opacity: 1;
+    animation: none;
   }
 `;
 

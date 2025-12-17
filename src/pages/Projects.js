@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { EnhancedCard, Tag } from '../components/UIComponents';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -82,38 +83,8 @@ const ProjectTitle = styled.h3`
   }
 `;
 
-const ProjectCard = styled(motion.div)`
-  background: ${props => props.theme.colors.cardBg};
-  backdrop-filter: blur(10px);
-  border-radius: ${props => props.theme.borderRadius.xl};
-  overflow: hidden;
-  box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
-  position: relative;
-  z-index: 1;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: ${props => props.theme.colors.gradient};
-    z-index: -1;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
+const ProjectCard = styled(EnhancedCard)`
   &:hover {
-    transform: translateY(-10px);
-    box-shadow: ${props => props.theme.shadows.xl};
-    
-    &::before {
-      opacity: 0.1;
-    }
-    
     ${ProjectTitle} {
       color: ${props => props.theme.colors.secondary};
     }
@@ -132,11 +103,12 @@ const ProjectContent = styled.div`
   }
 `;
 
-const ProjectTech = styled.p`
-  font-size: 0.9rem;
-  font-weight: 600;
+const ProjectTech = styled.div`
   margin-bottom: 1rem;
-  color: ${props => props.theme.colors.secondary};
+  
+  ${Tag} {
+    margin: 0.25rem 0.25rem 0.25rem 0;
+  }
 `;
 
 const ProjectDescription = styled.p`
@@ -308,7 +280,11 @@ const Projects = () => {
                 >
                   <ProjectTitle>{project.title}</ProjectTitle>
                 </motion.div>
-                <ProjectTech>{project.tech}</ProjectTech>
+                <ProjectTech>
+                                  {project.tech.split(', ').map((tech, index) => (
+                                    <Tag key={index}>{tech}</Tag>
+                                  ))}
+                                </ProjectTech>
                 <ProjectDescription>{project.description}</ProjectDescription>
                 <ProjectFeatures>
                   <h4>Key Features:</h4>

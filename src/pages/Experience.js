@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { FaBriefcase, FaCalendarAlt } from 'react-icons/fa';
+import { FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
+import { EnhancedCard } from '../components/UIComponents';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -99,13 +100,8 @@ const TimelineIcon = styled.div`
   }
 `;
 
-const TimelineContent = styled.div`
-  background: ${props => props.theme.colors.cardBg};
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
+const TimelineContent = styled(EnhancedCard)`
   padding: 2rem;
-  box-shadow: ${props => props.theme.shadows.medium};
-  border: 1px solid rgba(255, 255, 255, 0.1);
   
   @media (max-width: ${props => props.theme.breakpoints.md}) {
     padding: 1.5rem;
@@ -263,7 +259,12 @@ const Experience = () => {
                   <FaCalendarAlt />
                   <span>{exp.period}</span>
                 </JobPeriod>
-                {exp.location && <JobPeriod>{exp.location}</JobPeriod>}
+                {exp.location && (
+                                <JobPeriod>
+                                  <FaMapMarkerAlt />
+                                  <span>{exp.location}</span>
+                                </JobPeriod>
+                              )}
                 <JobDescription>{exp.description}</JobDescription>
                 <SectionHeading>Key Responsibilities:</SectionHeading>
                 <ResponsibilitiesList>
