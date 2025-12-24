@@ -19,9 +19,9 @@ const BackToTopButton = styled.button`
   justify-content: center;
   transition: all 0.3s ease;
   z-index: 1000;
-  opacity: ${props => props.visible ? '1' : '0'};
-  visibility: ${props => props.visible ? 'visible' : 'hidden'};
-  transform: translateY(${props => props.visible ? '0' : '20px'}) scale(${props => props.visible ? '1' : '0.8'});
+  opacity: ${props => props.$visible ? '1' : '0'};
+  visibility: ${props => props.$visible ? 'visible' : 'hidden'};
+  transform: translateY(${props => props.$visible ? '0' : '20px'}) scale(${props => props.$visible ? '1' : '0.8'});
   
   &:hover {
     transform: translateY(-5px) scale(1.1);
@@ -101,7 +101,7 @@ const BackToTop = () => {
 
   return (
     <BackToTopButton 
-      visible={visible} 
+      $visible={visible} 
       onClick={scrollToTop}
       aria-label="Back to top"
     >

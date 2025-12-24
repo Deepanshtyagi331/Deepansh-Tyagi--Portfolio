@@ -73,7 +73,7 @@ const NavContainer = styled.div`
 /* -----------------------------------------
    LOGO
 -------------------------------------------- */
-const Logo = styled(motion(Link))`
+const StyledLogo = styled(Link)`
   font-size: 1.6rem;
   font-weight: 800;
   text-decoration: none;
@@ -91,10 +91,12 @@ const Logo = styled(motion(Link))`
   }
 `;
 
+const Logo = motion.create(StyledLogo);
+
 /* -----------------------------------------
    MOBILE MENU BUTTON
 -------------------------------------------- */
-const MobileMenuButton = styled(motion.button)`
+const StyledMobileMenuButton = styled.button`
   display: none;
   background: none;
   border: none;
@@ -105,6 +107,8 @@ const MobileMenuButton = styled(motion.button)`
     display: block;
   }
 `;
+
+const MobileMenuButton = motion.create(StyledMobileMenuButton);
 
 /* -----------------------------------------
    NAV LINKS WRAPPER
@@ -134,7 +138,7 @@ const NavLinks = styled.div`
 /* -----------------------------------------
    NAV INDIVIDUAL LINK
 -------------------------------------------- */
-const NavItem = styled(motion(Link))`
+const StyledNavItem = styled(Link)`
   font-size: 1rem;
   font-weight: 500;
 
@@ -146,23 +150,26 @@ const NavItem = styled(motion(Link))`
   align-items: center;
   gap: 0.6rem;
 
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.3rem;
-  transition: 0.3s ease;
-  position: relative;
-
-  ${({ $open, $delay }) =>
-    $open &&
-    css`
-      animation: ${fadeIn} 0.35s ease-out ${$delay}s both;
-    `}
+  padding: 0.8rem 1.2rem;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
+  transition: all 0.3s ease;
 
   &:hover {
-    transform: translateY(-2px);
-    color: ${({ theme }) => theme.colors.primary};
+    background: ${({ theme }) => theme.colors.primary}20;
+    transform: translateX(5px);
   }
 
-  /* Active indicator */
+  @media (max-width: 768px) {
+    padding: 1rem;
+    font-size: 1.1rem;
+    width: 100%;
+
+    &:hover {
+      background: ${({ theme }) => theme.colors.primary}30;
+      transform: translateX(0);
+    }
+  }
+
   &::after {
     content: '';
     position: absolute;
@@ -196,6 +203,8 @@ const NavItem = styled(motion(Link))`
   }
 `;
 
+const NavItem = motion.create(StyledNavItem);
+
 /* -----------------------------------------
    BACKDROP FOR MOBILE MENU
 -------------------------------------------- */
@@ -213,8 +222,75 @@ const Backdrop = styled.div`
 `;
 
 /* -----------------------------------------
-   THEME TOGGLE BUTTON
+   ENHANCED THEME TOGGLE BUTTON
 -------------------------------------------- */
+const ThemeToggleContainer = styled(motion.div)`
+  position: relative;
+  width: 60px;
+  height: 30px;
+  background: ${props => props.theme.colors.glass};
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid ${props => props.theme.colors.glassBorder};
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all ${props => props.theme.transitions.smooth};
+  overflow: hidden;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: ${props => props.theme.shadows.glow};
+  }
+  
+  &:active {
+    transform: scale(0.95);
+  }
+  
+  @media (max-width: 768px) {
+    position: absolute;
+    top: 20px;
+    right: 60px;
+  }
+  
+  @media (max-width: 400px) {
+    top: 15px;
+    right: 50px;
+    width: 50px;
+    height: 25px;
+  }
+`;
+
+const ThemeToggleSlider = styled(motion.div)`
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  background: ${props => props.theme.colors.gradient};
+  border-radius: 50%;
+  transition: all ${props => props.theme.transitions.smooth};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: ${props => props.theme.shadows.small};
+  
+  @media (max-width: 400px) {
+    width: 18px;
+    height: 18px;
+    top: 2px;
+    left: 2px;
+  }
+  
+  svg {
+    font-size: 12px;
+    color: white;
+    
+    @media (max-width: 400px) {
+      font-size: 10px;
+    }
+  }
+`;
+
 const ThemeToggle = styled.button`
   background: none;
   border: none;
@@ -380,10 +456,27 @@ const Navbar = ({ themeMode, setThemeMode }) => {
           </SocialLinks>
         </NavLinks>
 
-        {/* Theme Toggle Button */}
-        <ThemeToggle onClick={toggleTheme} aria-label="Toggle theme">
-          {themeMode === 'dark' ? <FaSun /> : <FaMoon />}
-        </ThemeToggle>
+        {/* Enhanced Theme Toggle Button */}
+        <ThemeToggleContainer 
+          onClick={toggleTheme} 
+          aria-label="Toggle theme"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <ThemeToggleSlider
+            animate={{
+              x: themeMode === 'dark' ? 0 : 28,
+              rotate: themeMode === 'dark' ? 0 : 180
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30
+            }}
+          >
+            {themeMode === 'dark' ? <FaMoon /> : <FaSun />}
+          </ThemeToggleSlider>
+        </ThemeToggleContainer>
 
         <Backdrop $open={menuOpen} onClick={() => setMenuOpen(false)} />
       </NavContainer>

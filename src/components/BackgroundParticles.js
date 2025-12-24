@@ -33,16 +33,16 @@ const pulse = keyframes`
 
 const Particle = styled.div`
   position: fixed;
-  width: ${props => props.size}px;
-  height: ${props => props.size}px;
-  background: ${props => props.color};
+  width: ${props => props.$size}px;
+  height: ${props => props.$size}px;
+  background: ${props => props.$color};
   border-radius: 50%;
-  top: ${props => props.top}%;
-  left: ${props => props.left}%;
+  top: ${props => props.$top}%;
+  left: ${props => props.$left}%;
   opacity: 0.3;
-  animation: ${float} ${props => props.duration}s linear infinite;
+  animation: ${float} ${props => props.$duration}s linear infinite;
   z-index: -1;
-  box-shadow: 0 0 10px ${props => props.glowColor};
+  box-shadow: 0 0 10px ${props => props.$glowColor};
   transition: all 0.3s ease;
   cursor: pointer;
   
@@ -97,12 +97,12 @@ const BackgroundParticles = () => {
       {particles.map(particle => (
         <Particle
           key={particle.id}
-          size={particle.size}
-          color={particle.color}
-          glowColor={particle.glowColor}
-          top={particle.top}
-          left={particle.left}
-          duration={particle.duration}
+          $size={particle.size}
+          $color={particle.color}
+          $glowColor={particle.glowColor}
+          $top={particle.top}
+          $left={particle.left}
+          $duration={particle.duration}
           style={{ 
             animationDelay: `${particle.delay}s`,
             borderRadius: particle.shape === 'square' ? '20%' : '50%',

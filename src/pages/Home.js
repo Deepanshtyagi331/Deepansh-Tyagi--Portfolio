@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaLinkedin, FaGithub, FaPhone, FaDownload } from 'react-icons/fa';
-import { AnimatedButton, SectionTitle as EnhancedSectionTitle } from '../components/UIComponents';
+import { AnimatedButton, SectionTitle as EnhancedSectionTitle, GlassCard, GradientText, Badge } from '../components/UIComponents';
 
 const HomeContainer = styled.div`
   min-height: 100vh;
@@ -10,6 +10,20 @@ const HomeContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(108, 92, 231, 0.1) 0%, transparent 70%);
+    animation: float 20s ease-in-out infinite;
+    z-index: -1;
+  }
   
   @media (max-width: ${props => props.theme.breakpoints.lg}) {
     padding: 1.5rem;
@@ -62,24 +76,37 @@ const ContentWrapper = styled.div`
 
 const InfoSection = styled(motion.div)`
   h1 {
-    font-size: 3.5rem;
-    margin-bottom: 1rem;
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
     background: ${props => props.theme.colors.gradient};
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     position: relative;
     display: inline-block;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1px;
     
     &::after {
       content: '';
       position: absolute;
-      bottom: -10px;
+      bottom: -15px;
       left: 0;
-      width: 100px;
-      height: 4px;
+      width: 120px;
+      height: 5px;
       background: ${props => props.theme.colors.gradient};
-      border-radius: 2px;
+      border-radius: 3px;
+      box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
+      animation: glow 2s ease-in-out infinite;
+    }
+    
+    @media (max-width: ${props => props.theme.breakpoints.lg}) {
+      font-size: 3.5rem;
+    }
+    
+    @media (max-width: ${props => props.theme.breakpoints.md}) {
+      font-size: 3rem;
     }
     
     @media (max-width: ${props => props.theme.breakpoints.sm}) {
@@ -88,8 +115,8 @@ const InfoSection = styled(motion.div)`
   }
   
   h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    margin-bottom: 2rem;
     color: ${props => props.theme.colors.secondary};
     font-weight: 600;
     position: relative;
@@ -100,9 +127,9 @@ const InfoSection = styled(motion.div)`
       position: absolute;
       bottom: -8px;
       left: 0;
-      width: 60px;
+      width: 80px;
       height: 3px;
-      background: ${props => props.theme.colors.secondary};
+      background: ${props => props.theme.colors.gradientSecondary};
       border-radius: 2px;
     }
     

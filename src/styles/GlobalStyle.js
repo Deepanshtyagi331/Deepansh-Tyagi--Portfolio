@@ -7,59 +7,21 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
   
-  @keyframes gradientAnimation {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
+  *::before,
+  *::after {
+    box-sizing: inherit;
   }
   
-  @keyframes floatingParticles {
-    0% {
-      transform: translateY(0) translateX(0);
-    }
-    50% {
-      transform: translateY(-20px) translateX(10px);
-    }
-    100% {
-      transform: translateY(0) translateX(0);
-    }
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
-  @keyframes pulse {
-    0% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(108, 92, 231, 0.7);
-    }
-    70% {
-      transform: scale(1.02);
-      box-shadow: 0 0 0 10px rgba(108, 92, 231, 0);
-    }
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(108, 92, 231, 0);
-    }
-  }
-  
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-      transform: translateY(0);
-    }
-    40% {
-      transform: translateY(-10px);
-    }
-    60% {
-      transform: translateY(-5px);
-    }
-  }
-
   body {
-    font-family: 'Poppins', 'Montserrat', sans-serif;
+    font-family: 'Poppins', 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background: ${props => props.theme.colors.background};
     color: ${props => props.theme.colors.text};
     line-height: 1.6;
@@ -68,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
     overflow-x: hidden;
     font-size: 16px;
     font-weight: 400;
+    min-height: 100vh;
     
     &::before {
       content: '';
@@ -79,8 +42,9 @@ const GlobalStyle = createGlobalStyle`
       background: radial-gradient(circle at 10% 20%, rgba(108, 92, 231, 0.15) 0%, rgba(15, 15, 26, 0) 20%),
                   radial-gradient(circle at 90% 80%, rgba(0, 206, 201, 0.15) 0%, rgba(15, 15, 26, 0) 20%);
       background-size: 200% 200%;
-      animation: gradientAnimation 15s ease infinite;
+      animation: gradientAnimation 20s ease infinite;
       z-index: -1;
+      pointer-events: none;
     }
     
     &::after {
@@ -94,7 +58,8 @@ const GlobalStyle = createGlobalStyle`
         radial-gradient(ellipse at 20% 30%, rgba(108, 92, 231, 0.1) 0%, transparent 30%),
         radial-gradient(ellipse at 80% 70%, rgba(0, 206, 201, 0.1) 0%, transparent 30%);
       z-index: -2;
-      animation: floatingParticles 20s ease-in-out infinite;
+      animation: floatingParticles 25s ease-in-out infinite;
+      pointer-events: none;
     }
     
     @media (max-width: ${props => props.theme.breakpoints.md}) {
@@ -107,60 +72,72 @@ const GlobalStyle = createGlobalStyle`
   }
   
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', sans-serif;
-    margin-bottom: 1rem;
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    margin-bottom: 1.5rem;
     color: ${props => props.theme.colors.light};
     letter-spacing: -0.5px;
     font-weight: 700;
     line-height: 1.2;
+    scroll-margin-top: 100px;
   }
   
   h1 {
-    font-size: 3rem;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    background: ${props => props.theme.colors.gradient};
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    position: relative;
     
-    @media (max-width: ${props => props.theme.breakpoints.md}) {
-      font-size: 2.5rem;
-    }
-    
-    @media (max-width: ${props => props.theme.breakpoints.sm}) {
-      font-size: 2rem;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: ${props => props.theme.colors.gradient};
+      border-radius: 2px;
+      box-shadow: 0 0 20px rgba(108, 92, 231, 0.5);
     }
   }
   
   h2 {
-    font-size: 2rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700;
+    position: relative;
     
-    @media (max-width: ${props => props.theme.breakpoints.md}) {
-      font-size: 1.8rem;
-    }
-    
-    @media (max-width: ${props => props.theme.breakpoints.sm}) {
-      font-size: 1.5rem;
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background: ${props => props.theme.colors.gradientSecondary};
+      border-radius: 2px;
     }
   }
   
   h3 {
-    font-size: 1.5rem;
-    
-    @media (max-width: ${props => props.theme.breakpoints.md}) {
-      font-size: 1.3rem;
-    }
-    
-    @media (max-width: ${props => props.theme.breakpoints.sm}) {
-      font-size: 1.2rem;
-    }
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 600;
   }
   
   h4 {
-    font-size: 1.25rem;
+    font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+    font-weight: 600;
   }
   
   h5 {
-    font-size: 1.1rem;
+    font-size: clamp(1.1rem, 2vw, 1.5rem);
+    font-weight: 500;
   }
   
   h6 {
-    font-size: 1rem;
+    font-size: clamp(1rem, 1.5vw, 1.25rem);
+    font-weight: 500;
   }
   
   p {
@@ -310,6 +287,109 @@ const GlobalStyle = createGlobalStyle`
     
     @media (max-width: ${props => props.theme.breakpoints.md}) {
       scroll-margin-top: 80px;
+    }
+  }
+/* Professional animations */
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+  
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(108, 92, 231, 0.5); }
+    50% { box-shadow: 0 0 40px rgba(108, 92, 231, 0.8); }
+  }
+  
+  @keyframes slideInFromLeft {
+    0% { transform: translateX(-100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes slideInFromRight {
+    0% { transform: translateX(100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes slideInFromTop {
+    0% { transform: translateY(-100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes slideInFromBottom {
+    0% { transform: translateY(100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+  
+  @keyframes scaleIn {
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes fadeInScale {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes floatingParticles {
+    0% { transform: translateY(0) translateX(0) rotate(0deg); }
+    33% { transform: translateY(-20px) translateX(10px) rotate(120deg); }
+    66% { transform: translateY(10px) translateX(-10px) rotate(240deg); }
+    100% { transform: translateY(0) translateX(0) rotate(360deg); }
+  }
+  
+  /* Selection styling */
+  ::selection {
+    background: ${props => props.theme.colors.primary}40;
+    color: ${props => props.theme.colors.light};
+  }
+  
+  ::-moz-selection {
+    background: ${props => props.theme.colors.primary}40;
+    color: ${props => props.theme.colors.light};
+  }
+  
+  /* Focus styles for accessibility */
+  :focus-visible {
+    outline: 2px solid ${props => props.theme.colors.primary};
+    outline-offset: 2px;
+  }
+  
+  /* Reduced motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
     }
   }
 `;

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
-import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaMapMarkerAlt } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaEnvelope, FaPhone, FaLinkedin, FaGithub, FaMapMarkerAlt, FaTimes } from 'react-icons/fa';
 import emailjs from '@emailjs/browser';
 import { EMAILJS_CONFIG } from '../config/emailjs';
-import { EnhancedCard, AnimatedButton } from '../components/UIComponents';
+import { EnhancedCard } from '../components/UIComponents';
 
 const PageContainer = styled.div`
   min-height: 100vh;
@@ -119,15 +119,28 @@ const Input = styled.input`
   padding: 0.75rem;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(30, 30, 46, 0.5);
+  background: rgba(30, 30, 46, 0.8);
   color: ${props => props.theme.colors.text};
-  font-family: ${props => props.theme.fonts.main};
+  font-family: inherit;
   font-size: 1rem;
+  position: relative;
+  z-index: 10;
+  pointer-events: auto;
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
   
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.primary};
     box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
+    background: rgba(30, 30, 46, 0.9);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
   }
 `;
 
@@ -136,26 +149,169 @@ const TextArea = styled.textarea`
   padding: 0.75rem;
   border-radius: 8px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(30, 30, 46, 0.5);
+  background: rgba(30, 30, 46, 0.8);
   color: ${props => props.theme.colors.text};
-  font-family: ${props => props.theme.fonts.main};
+  font-family: inherit;
   font-size: 1rem;
   min-height: 150px;
   resize: vertical;
+  position: relative;
+  z-index: 11; /* Changed from 10 to 11 */
+  pointer-events: auto;
+  
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
   
   &:focus {
     outline: none;
     border-color: ${props => props.theme.colors.primary};
     box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.2);
   }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 `;
 
-const SubmitButton = styled(AnimatedButton)`
+const SubmitButton = styled(motion.button)`
   width: 100%;
+  background: ${props => props.theme.colors.gradient};
+  color: white;
   border: none;
-  font-size: 1rem;
+  border-radius: 8px;
+  padding: 0.875rem 2rem;
+  font-family: inherit;
   font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
+  transition: all ${props => props.theme.transitions.smooth};
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: ${props => props.theme.shadows.colored};
+  z-index: 10;
+  pointer-events: auto;
+  
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(108, 92, 231, 0.3);
+  }
+  
+  &:active:not(:disabled) {
+    transform: translateY(0);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+  }
+  
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.3);
+  }
+`;
+
+const PopupOverlay = styled(motion.div)`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+`;
+
+const PopupModal = styled(motion.div)`
+  background: ${props => props.theme.colors.cardBg};
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid ${props => props.theme.colors.glassBorder};
+  border-radius: ${props => props.theme.borderRadius.xl};
+  padding: 2rem;
+  max-width: 500px;
+  width: 100%;
+  position: relative;
+  box-shadow: ${props => props.theme.shadows.xl};
+  
+  @media (max-width: ${props => props.theme.breakpoints.sm}) {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+`;
+
+const PopupClose = styled.button`
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: ${props => props.theme.colors.text};
+  opacity: 0.6;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.1);
+  }
+  
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+`;
+
+const PopupIcon = styled.div`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: ${props => 
+    props.$type === 'success' ? 'rgba(46, 213, 115, 0.2)' :
+    props.$type === 'error' ? 'rgba(255, 71, 87, 0.2)' :
+    'rgba(255, 193, 7, 0.2)'
+  };
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: ${props => 
+    props.$type === 'success' ? '#2ed573' :
+    props.$type === 'error' ? '#ff4757' :
+    '#ffc107'
+  };
+  
+  svg {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+const PopupTitle = styled.h2`
+  text-align: center;
+  margin: 0 0 1rem 0;
+  color: ${props => props.theme.colors.light};
+  font-size: 1.5rem;
+`;
+
+const PopupMessage = styled.p`
+  text-align: center;
+  margin: 0;
+  color: ${props => props.theme.colors.text};
+  line-height: 1.6;
+  font-size: 1rem;
 `;
 
 const SuccessMessage = styled.div`
@@ -176,6 +332,37 @@ const ErrorMessage = styled.div`
   text-align: center;
 `;
 
+const Popup = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`;
+
+const PopupContent = styled.div`
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  max-width: 90%;
+`;
+
+const PopupButton = styled.button`
+  background: ${props => props.theme.colors.primary};
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+`;
+
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -183,32 +370,57 @@ const Contact = () => {
     message: ''
   });
   
-  const [formStatus, setFormStatus] = useState({
-    submitted: false,
-    success: false,
-    error: false
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [popup, setPopup] = useState({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
   });
   
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
   
-  const handleSubmit = (e) => {
+  const showPopup = (type, title, message) => {
+    setPopup({
+      show: true,
+      type,
+      title,
+      message
+    });
+  };
+  
+  const closePopup = () => {
+    setPopup(prev => ({ ...prev, show: false }));
+  };
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Form validation
     if (!formData.name || !formData.email || !formData.message) {
-      setFormStatus({
-        submitted: true,
-        success: false,
-        error: true
-      });
+      showPopup(
+        'warning',
+        'Validation Error',
+        'Please fill in all required fields before submitting.'
+      );
       return;
     }
+    
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      showPopup(
+        'error',
+        'Invalid Email',
+        'Please enter a valid email address.'
+      );
+      return;
+    }
+    
+    setIsSubmitting(true);
     
     // Prepare template parameters
     const templateParams = {
@@ -218,35 +430,41 @@ const Contact = () => {
       to_name: 'Deepansh Tyagi',
     };
     
-    // Send email using EmailJS
-    emailjs.send(
-      EMAILJS_CONFIG.SERVICE_ID, 
-      EMAILJS_CONFIG.TEMPLATE_ID, 
-      templateParams, 
-      EMAILJS_CONFIG.PUBLIC_KEY
-    )
-      .then((result) => {
-        console.log(result.text);
-        setFormStatus({
-          submitted: true,
-          success: true,
-          error: false
-        });
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        EMAILJS_CONFIG.SERVICE_ID, 
+        EMAILJS_CONFIG.TEMPLATE_ID, 
+        templateParams,
+        EMAILJS_CONFIG.PUBLIC_KEY
+      );
+      
+      if (result.status === 200) {
+        showPopup(
+          'success',
+          'Message Sent Successfully!',
+          'Thank you for reaching out. I\'ll get back to you soon.'
+        );
         
-        // Reset form after successful submission
+        // Reset form
         setFormData({
           name: '',
           email: '',
           message: ''
         });
-      }, (error) => {
-        console.log(error.text);
-        setFormStatus({
-          submitted: true,
-          success: false,
-          error: true
-        });
-      });
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('EmailJS error:', error);
+      showPopup(
+        'error',
+        'Failed to Send Message',
+        'There was an error sending your message. Please try again or contact me directly via email.'
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -342,24 +560,63 @@ const Contact = () => {
               </FormGroup>
               
               <SubmitButton 
-                            type="submit"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
-                          >
-                            Submit
-                          </SubmitButton>
-              
-              {formStatus.submitted && formStatus.success && (
-                <SuccessMessage>Thank you for your message! I'll get back to you soon.</SuccessMessage>
-              )}
-              
-              {formStatus.submitted && formStatus.error && (
-                <ErrorMessage>{formData.name && formData.email && formData.message ? 'Failed to send message. Please try again later.' : 'Please fill in all fields.'}</ErrorMessage>
-              )}
+                type="submit"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Submit'}
+              </SubmitButton>
             </form>
           </ContactForm>
         </ContactGrid>
       </ContentWrapper>
+      <AnimatePresence>
+        {popup.show && (
+          <PopupOverlay
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closePopup}
+          >
+            <PopupModal
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <PopupClose onClick={closePopup}>
+                <FaTimes />
+              </PopupClose>
+              
+              <PopupIcon $type={popup.type}>
+                {popup.type === 'success' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M20 6L9 17l-5-5"/>
+                  </svg>
+                )}
+                {popup.type === 'error' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10"/>
+                    <line x1="15" y1="9" x2="9" y2="15"/>
+                    <line x1="9" y1="9" x2="15" y2="15"/>
+                  </svg>
+                )}
+                {popup.type === 'warning' && (
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                )}
+              </PopupIcon>
+              
+              <PopupTitle>{popup.title}</PopupTitle>
+              <PopupMessage>{popup.message}</PopupMessage>
+            </PopupModal>
+          </PopupOverlay>
+        )}
+      </AnimatePresence>
     </PageContainer>
   );
 };
