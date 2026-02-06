@@ -1,1 +1,0 @@
-﻿{"version": 2, "builds": [{"src": "server.js", "use": "@vercel/node"}], "routes": [{"src": "/api/(.*)", "dest": "/server.js"}], "env": {"EMAIL_USER": "tyagideepansh871@gmail.com", "EMAIL_TO": "tyagideepansh26@gmail.com"}}

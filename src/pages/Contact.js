@@ -31,7 +31,7 @@ const Contact = () => {
   const getApiUrl = () => {
     if (process.env.NODE_ENV === 'production') {
       // In production, use the deployed backend URL
-      return 'https://your-backend-url.vercel.app/api/contact';
+      return 'https://deepanshtyagi.vercel.app/api/contact';
     } else {
       // In development, use local backend
       return 'http://localhost:5001/api/contact';
