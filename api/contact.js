@@ -1,17 +1,9 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
 const cors = require('cors');
-const path = require('path');
 require('dotenv').config();
 
-const app = express();
-const PORT = process.env.PORT || 5001; // Changed to 5001 to avoid conflicts
-
-// Middleware
-app.use(cors());
-app.use(express.json());
-
-// Nodemailer configuration
+// Create transporter
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -20,8 +12,21 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-// Contact form endpoint
-app.post('/api/contact', async (req, res) => {
+// Contact form handler
+module.exports = async (req, res) => {
+  // Enable CORS
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ success: false, message: 'Method not allowed' });
+  }
+
   try {
     console.log('Request body:', req.body);
     console.log('Environment variables:', {
@@ -72,13 +77,4 @@ app.post('/api/contact', async (req, res) => {
       message: 'Failed to send message. Please try again.' 
     });
   }
-});
-
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({ status: 'Server is running' });
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+};
