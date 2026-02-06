@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { getTheme } from './styles/theme';
-import GlobalStyle from './styles/GlobalStyle';
 
 const Root = () => {
   const [themeMode, setThemeMode] = useState(() => {
@@ -15,20 +12,20 @@ const Root = () => {
     return savedTheme || 'dark'; // Default to dark theme
   });
 
-  const theme = getTheme(themeMode);
-
-  // Save theme preference to localStorage
+  // Apply theme to document
   useEffect(() => {
     localStorage.setItem('theme', themeMode);
+    if (themeMode === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
   }, [themeMode]);
 
   return (
     <React.StrictMode>
       <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <GlobalStyle />
-          <App themeMode={themeMode} setThemeMode={setThemeMode} />
-        </ThemeProvider>
+        <App themeMode={themeMode} setThemeMode={setThemeMode} />
       </BrowserRouter>
     </React.StrictMode>
   );
