@@ -18,7 +18,7 @@ const About = () => {
             </span>
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            Passionate AI/ML Developer and Backend Engineer building intelligent systems and scalable solutions.
+            Detail-oriented professional with a strong foundation in data analytics and backend development, passionate about transforming raw data into actionable insights and building robust, scalable systems. Skilled in data manipulation, visualization, and backend technologies to support evidence-based decision-making and efficient application performance.
           </p>
         </motion.div>
 
@@ -44,7 +44,7 @@ const About = () => {
                 Deepansh Tyagi
               </h2>
               <p className="text-purple-600 dark:text-purple-400 font-medium">
-                AI/ML Developer & Backend Engineer
+                Full-Stack Developer & Data Analyst
               </p>
             </div>
 
@@ -77,7 +77,7 @@ const About = () => {
                 Who I Am
               </h3>
               <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                I'm a passionate AI/ML Developer and Backend Engineer with a strong foundation in building 
+                I'm a passionate Full-Stack Developer & Data Analyst with a strong foundation in building 
                 intelligent systems and scalable web applications. My expertise spans from developing machine learning 
                 models to architecting robust backend systems that power modern applications.
               </p>
@@ -126,7 +126,7 @@ const About = () => {
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Bachelor of Technology</h4>
                   <p className="text-gray-600 dark:text-gray-400">Computer Science and Engineering</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-500">2020 - 2024</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-500">2022 - 2026</p>
                 </div>
               </div>
             </div>

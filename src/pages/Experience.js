@@ -5,46 +5,32 @@ import { FaBriefcase, FaCalendarAlt, FaMapMarkerAlt } from 'react-icons/fa';
 const Experience = () => {
   const experiences = [
     {
-      title: "AI/ML Developer",
-      company: "Tech Solutions Inc.",
+      title: "Back-End Developer",
+      company: "Truwix Tech Solution Pvt. Ltd.",
       location: "Remote",
-      period: "Jan 2023 - Present",
-      description: "Developing machine learning models and AI-powered solutions for enterprise clients.",
+      period: "Sep 2025 - Ongoing",
+      description: "Developing and maintaining RESTful APIs using Node.js (Express) and Python (Flask/FastAPI) for seamless frontend-backend communication. Implementing secure authentication and authorization using JWT and OAuth2 standards. Designing and optimizing database schemas in MongoDB / MySQL / PostgreSQL for efficient data storage and retrieval. Contributing to data-driven features by integrating analytical scripts in Python for real-time insights.",
       achievements: [
-        "Built and deployed real-time object detection system using YOLO",
-        "Implemented NLP pipeline for sentiment analysis achieving 92% accuracy",
-        "Optimized model inference time by 40% through model quantization",
-        "Led team of 3 developers in building predictive analytics platform"
+        "Developed scalable REST APIs supporting high-volume requests",
+        "Implemented secure authentication systems with JWT and OAuth2",
+        "Optimized database queries for improved performance",
+        "Integrated real-time data processing and analytics"
       ],
-      technologies: ["Python", "TensorFlow", "PyTorch", "FastAPI", "Docker", "AWS"]
+      technologies: ["Node.js", "Express", "Python", "Flask", "FastAPI", "MongoDB", "MySQL", "PostgreSQL", "JWT", "OAuth2"]
     },
     {
-      title: "Backend Developer",
-      company: "Digital Innovations Ltd.",
-      location: "Noida, India",
-      period: "Jun 2022 - Dec 2022",
-      description: "Developed scalable REST APIs and microservices architecture for SaaS platform.",
+      title: "Junior Data Analyst",
+      company: "Tanvika Software Pvt. Ltd.",
+      location: "Remote",
+      period: "May 2025 - Sept 2025",
+      description: "Completed a hands-on Junior Data Analyst Training Program focused on data analysis, data visualization, and Python programming. Developed end-to-end data analysis projects using libraries like Pandas, NumPy, Matplotlib, and Seaborn. Worked with CSV, Excel, and SQL databases for data extraction and transformation tasks.",
       achievements: [
-        "Designed and implemented RESTful APIs serving 10M+ requests daily",
-        "Reduced API response time by 60% through caching strategies",
-        "Implemented real-time data processing using WebSocket connections",
-        "Migrated monolithic application to microservices architecture"
+        "Completed comprehensive data analysis training program",
+        "Built multiple end-to-end data analysis projects",
+        "Mastered data visualization with Matplotlib and Seaborn",
+        "Gained proficiency in SQL database operations"
       ],
-      technologies: ["Node.js", "Express.js", "MongoDB", "Redis", "GraphQL", "Kubernetes"]
-    },
-    {
-      title: "Full Stack Developer Intern",
-      company: "StartUp Hub",
-      location: "Gurgaon, India",
-      period: "Jan 2022 - May 2022",
-      description: "Worked on full-stack web applications and gained experience in modern development practices.",
-      achievements: [
-        "Developed responsive web interfaces using React and Tailwind CSS",
-        "Built REST APIs for data management and user authentication",
-        "Implemented CI/CD pipelines using GitHub Actions",
-        "Collaborated with team using Agile methodology"
-      ],
-      technologies: ["React", "Node.js", "Express.js", "PostgreSQL", "Git", "AWS"]
+      technologies: ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "SQL", "Excel", "CSV"]
     }
   ];
 

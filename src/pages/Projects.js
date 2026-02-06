@@ -6,105 +6,54 @@ const Projects = () => {
   const projects = [
     {
       id: 1,
-      title: "PaperMind AI",
-      category: "AI Chat Application",
-      tech: ["Python", "TinyLLaMA", "RAG", "FastAPI", "React"],
-      description: "A document-based AI chatbot using TinyLLaMA and RAG to enable natural language conversations with PDFs. Processes documents and provides intelligent responses based on content.",
+      title: "Urban-Hub (E-Commerce Website)",
+      category: "Full-Stack E-Commerce",
+      tech: ["React", "Node.js", "MongoDB", "Express"],
+      description: "Full-stack e-commerce platform built using React, Node.js, and MongoDB, featuring secure APIs, dynamic UI, and efficient data management.",
       features: [
-        "Document upload and processing",
-        "Natural language conversations",
-        "Context-aware responses",
-        "Multiple file format support",
-        "Real-time chat interface"
+        "Secure API implementation",
+        "Dynamic user interface",
+        "Efficient data management",
+        "MongoDB integration",
+        "Modern React frontend"
       ],
-      github: "https://github.com/Deepanshtyagi331/PaperMindAI",
-      demo: "#",
-      icon: <FaBrain className="text-3xl" />
+      github: "https://github.com/Deepanshtyagi331/urban-hub",
+      demo: "https://urban-hub-frontendu.vercel.app/",
+      icon: <FaReact className="text-3xl" />
     },
     {
       id: 2,
-      title: "MoodifyAI",
-      category: "Emotion Recognition System",
-      tech: ["Python", "Computer Vision", "TensorFlow", "Flask", "React"],
-      description: "An AI-powered emotion recognition system that recommends music based on facial expression analysis. Uses deep learning models to detect emotions and suggest appropriate music.",
+      title: "BharatroniX (E-Commerce Website)",
+      category: "Backend Architecture",
+      tech: ["Node.js", "Express", "MongoDB", "E-commerce"],
+      description: "Complete backend architecture for BharatroniX, supporting scalable ecommerce operations for electronic components and hardware products.",
       features: [
-        "Real-time facial expression detection",
-        "Music recommendation engine",
-        "Emotion-based playlist generation",
-        "Webcam integration",
-        "Spotify API integration"
+        "Scalable backend architecture",
+        "Ecommerce operations support",
+        "Electronic components platform",
+        "Hardware products management",
+        "API development"
       ],
-      github: "https://github.com/Deepanshtyagi331/MoodifyAI",
-      demo: "#",
-      icon: <FaRobot className="text-3xl" />
-    },
-    {
-      id: 3,
-      title: "YOLO-Custom-Trainer",
-      category: "Object Detection",
-      tech: ["Python", "YOLOv8", "PyTorch", "OpenCV", "Streamlit"],
-      description: "A complete YOLOv8 workflow for training and deploying custom object detection models. Provides an intuitive interface for dataset preparation and model training.",
-      features: [
-        "Custom dataset preparation",
-        "YOLOv8 model training",
-        "Real-time object detection",
-        "Model performance evaluation",
-        "Export to multiple formats"
-      ],
-      github: "https://github.com/Deepanshtyagi331/YOLO-Custom-Trainer",
-      demo: "#",
-      icon: <FaChartLine className="text-3xl" />
-    },
-    {
-      id: 4,
-      title: "E-Commerce Backend API",
-      category: "Backend Development",
-      tech: ["Node.js", "Express", "MongoDB", "JWT", "Redis"],
-      description: "A comprehensive backend API for an e-commerce platform featuring user authentication, product management, shopping cart, and order processing with microservices architecture.",
-      features: [
-        "RESTful API design",
-        "User authentication & authorization",
-        "Product management system",
-        "Order processing workflow",
-        "Redis caching for performance"
-      ],
-      github: "https://github.com/Deepanshtyagi331/ecommerce-api",
-      demo: "#",
+      github: "https://github.com/Deepanshtyagi331/bharatronix-backend",
+      demo: "https://www.bharatronix.com",
       icon: <FaNodeJs className="text-3xl" />
     },
     {
-      id: 5,
-      title: "Data Analytics Dashboard",
-      category: "Data Analytics",
-      tech: ["Python", "Pandas", "Plotly", "Dash", "PostgreSQL"],
-      description: "An interactive dashboard for visualizing business metrics and KPIs. Processes large datasets and presents insights through various chart types and real-time updates.",
+      id: 3,
+      title: "MERN Stack Blog Platform",
+      category: "Full-Stack Application",
+      tech: ["React", "Node.js", "Express", "MongoDB", "Authentication"],
+      description: "Dynamic Blog Management Platform enabling users to create, edit, and comment on posts with real-time updates. Features role-based access control and SEO-friendly routing.",
       features: [
-        "Interactive data visualizations",
-        "Real-time data processing",
-        "Custom dashboard widgets",
-        "Export functionality",
-        "Predictive analytics"
+        "User authentication system",
+        "Role-based access control",
+        "Real-time blog updates",
+        "SEO-friendly routing",
+        "Content management system"
       ],
-      github: "https://github.com/Deepanshtyagi331/analytics-dashboard",
+      github: "https://github.com/Deepanshtyagi331/blog-platform",
       demo: "#",
-      icon: <FaChartLine className="text-3xl" />
-    },
-    {
-      id: 6,
-      title: "Task Management System",
-      category: "Full Stack Application",
-      tech: ["React", "Node.js", "Express", "MongoDB", "Socket.io"],
-      description: "A full-featured task management application with real-time collaboration, project organization, and team communication features.",
-      features: [
-        "Real-time collaboration",
-        "Project management",
-        "Team communication",
-        "File attachments",
-        "Progress tracking"
-      ],
-      github: "https://github.com/Deepanshtyagi331/task-manager",
-      demo: "#",
-      icon: <FaReact className="text-3xl" />
+      icon: <FaDatabase className="text-3xl" />
     }
   ];
 

@@ -5,79 +5,38 @@ import { FaGraduationCap, FaCalendarAlt, FaCertificate, FaAward, FaMapMarkerAlt 
 const Education = () => {
   const education = [
     {
-      degree: "Bachelor of Technology",
-      field: "Computer Science and Engineering",
-      institution: "Dr. A.P.J. Abdul Kalam Technical University",
-      location: "Lucknow, Uttar Pradesh, India",
-      period: "2020 - 2024",
-      grade: "8.5 CGPA",
-      description: "Comprehensive study of computer science fundamentals, algorithms, data structures, and software engineering principles.",
-      coursework: [
-        "Data Structures & Algorithms",
-        "Machine Learning",
-        "Database Management Systems",
-        "Web Development",
-        "Computer Networks",
-        "Artificial Intelligence"
+      degree: "B.Tech in Computer Science Engineering",
+      specialization: "Artificial Intelligence and Machine Learning",
+      institution: "NITRA Technical Campus, Ghaziabad",
+      period: "Nov 2022 - Ongoing",
+      type: "undergraduate",
+      icon: <FaGraduationCap className="text-purple-500" />,
+      achievements: [
+        "Specializing in AI/ML with focus on practical applications",
+        "Building strong foundation in computer science fundamentals",
+        "Developing expertise in machine learning algorithms and neural networks"
       ]
     },
-    {
-      degree: "Intermediate (12th Grade)",
-      field: "Science Stream (PCM)",
-      institution: "Delhi Public School",
-      location: "Ghaziabad, Uttar Pradesh, India",
-      period: "2018 - 2020",
-      grade: "92%",
-      description: "Focused on Physics, Chemistry, and Mathematics with additional subjects in Computer Science.",
-      coursework: [
-        "Physics",
-        "Chemistry", 
-        "Mathematics",
-        "Computer Science",
-        "English"
-      ]
-    },
-    {
-      degree: "High School (10th Grade)",
-      institution: "Delhi Public School",
-      location: "Ghaziabad, Uttar Pradesh, India", 
-      period: "2016 - 2018",
-      grade: "88%",
-      description: "Foundation education with focus on science and mathematics.",
-      coursework: [
-        "Science",
-        "Mathematics",
-        "Computer Science",
-        "Social Studies",
-        "English"
-      ]
-    }
   ];
 
   const certifications = [
     {
-      name: "TensorFlow Developer Certificate",
-      issuer: "Google",
-      date: "2023",
-      credential: "TF-2023-DEV-001"
+      name: "Python Training Program",
+      issuer: "Internshala",
+      date: "July 2023 - Aug 2023",
+      credential: "Completed comprehensive Basic Python Training Program covering core programming fundamentals including variables, data types, loops, functions, and file handling."
     },
     {
-      name: "AWS Certified Cloud Practitioner",
-      issuer: "Amazon Web Services",
-      date: "2023",
-      credential: "AWS-CCP-2023-001"
+      name: "Advance Python Course",
+      issuer: "Udemy", 
+      date: "Nov 2024 - Jan 2025",
+      credential: "Completed an intensive Advanced Python training program focusing on object-oriented programming, decorators, generators, and multithreading. Built scalable Python applications with in-depth understanding of memory management, performance tuning, and error handling."
     },
     {
-      name: "Machine Learning Specialization",
-      issuer: "Stanford University (Coursera)",
-      date: "2022",
-      credential: "ML-SPEC-2022-001"
-    },
-    {
-      name: "Full Stack Web Development",
-      issuer: "freeCodeCamp",
-      date: "2022",
-      credential: "FCC-FS-2022-001"
+      name: "Data Analysis Training",
+      issuer: "Appwars Technologies Pvt. Ltd.",
+      date: "June 2025 - Sep 2025",
+      credential: "Completed a data analyst internship program focused on data wrangling, visualization, and business insights using tools like Excel, SQL, and Power BI. Worked on real-world datasets to uncover insights and present findings using Power BI and Python during a 4-months data analyst internship."
     }
   ];
 
@@ -139,14 +98,10 @@ const Education = () => {
                         {edu.degree}
                       </h3>
                       <p className="text-lg text-purple-600 dark:text-purple-400 font-medium mb-2">
-                        {edu.field}
+                        {edu.specialization}
                       </p>
                       <div className="flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-400">
                         <span className="font-semibold">{edu.institution}</span>
-                        <div className="flex items-center gap-1">
-                          <FaMapMarkerAlt className="text-sm" />
-                          <span>{edu.location}</span>
-                        </div>
                         <div className="flex items-center gap-1">
                           <FaCalendarAlt className="text-sm" />
                           <span>{edu.period}</span>
@@ -154,33 +109,23 @@ const Education = () => {
                       </div>
                     </div>
 
-                    {/* Grade */}
-                    <div className="bg-purple-100 dark:bg-purple-900/30 rounded-lg p-3 inline-block">
-                      <span className="text-purple-600 dark:text-purple-400 font-semibold">
-                        Grade: {edu.grade}
-                      </span>
-                    </div>
-
                     {/* Description */}
                     <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                      {edu.description}
+                      Currently pursuing Computer Science Engineering with specialization in Artificial Intelligence and Machine Learning.
                     </p>
 
-                    {/* Coursework */}
+                    {/* Achievements */}
                     <div>
                       <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                        Key Coursework:
+                        Key Achievements:
                       </h4>
-                      <div className="flex flex-wrap gap-2">
-                        {edu.coursework.map((course, courseIndex) => (
-                          <span
-                            key={courseIndex}
-                            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm"
-                          >
-                            {course}
-                          </span>
+                      <ul className="list-disc pl-5 space-y-1">
+                        {edu.achievements && edu.achievements.map((achievement, achievementIndex) => (
+                          <li key={achievementIndex} className="text-gray-600 dark:text-gray-400">
+                            {achievement}
+                          </li>
                         ))}
-                      </div>
+                      </ul>
                     </div>
                   </div>
                 </div>
