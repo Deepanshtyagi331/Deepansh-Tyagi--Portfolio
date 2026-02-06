@@ -28,12 +28,22 @@ const Contact = () => {
     });
   };
 
+  const getApiUrl = () => {
+    if (process.env.NODE_ENV === 'production') {
+      // In production, use the deployed backend URL
+      return 'https://your-backend-url.vercel.app/api/contact';
+    } else {
+      // In development, use local backend
+      return 'http://localhost:5001/api/contact';
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:5001/api/contact', {
+      const response = await fetch(getApiUrl(), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
