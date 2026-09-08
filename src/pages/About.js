@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FaUser, FaMapMarkerAlt, FaEnvelope, FaPhone, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
 import PageBackground3D from '../components/common/PageBackground3D';
