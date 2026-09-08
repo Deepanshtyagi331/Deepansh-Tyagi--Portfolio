@@ -18,30 +18,26 @@ function App({ themeMode, setThemeMode }) {
   const pageVariants = {
     initial: {
       opacity: 0,
-      y: 30,
-      scale: 0.98
+      y: 20
     },
     in: {
       opacity: 1,
-      y: 0,
-      scale: 1
+      y: 0
     },
     out: {
       opacity: 0,
-      y: -30,
-      scale: 0.98
+      y: -20
     }
   };
 
   const pageTransition = {
-    type: 'tween',
-    ease: [0.25, 0.1, 0.25, 1],
-    duration: 0.4
+    duration: 0.45,
+    ease: [0.22, 1, 0.36, 1]
   };
 
   return (
     <div className={`min-h-screen ${themeMode === 'dark' ? 'dark' : ''}`}>
-      <div className="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+      <div className="bg-gray-50 dark:bg-[#0c0c0e] text-gray-900 dark:text-gray-100 transition-colors duration-300 min-h-screen">
         <Navbar themeMode={themeMode} setThemeMode={setThemeMode} />
         
         <AnimatePresence mode="wait">

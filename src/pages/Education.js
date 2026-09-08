@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaGraduationCap, FaCalendarAlt, FaCertificate, FaAward, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaGraduationCap, FaCertificate, FaCalendarAlt } from 'react-icons/fa';
+import PageBackground3D from '../components/common/PageBackground3D';
 
 const Education = () => {
   const education = [
@@ -10,7 +11,6 @@ const Education = () => {
       institution: "NITRA Technical Campus, Ghaziabad",
       period: "Nov 2022 - Ongoing",
       type: "undergraduate",
-      icon: <FaGraduationCap className="text-purple-500" />,
       achievements: [
         "Specializing in AI/ML with focus on practical applications",
         "Building strong foundation in computer science fundamentals",
@@ -41,174 +41,111 @@ const Education = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20 px-4">
-      <div className="max-w-6xl mx-auto">
+    <div className="relative min-h-[calc(100vh-5rem)] py-16 px-4 sm:px-6 lg:px-8">
+      {/* Interactive 3D Ambient Background */}
+      <PageBackground3D variant="education" />
+
+      <div className="relative z-10 max-w-5xl mx-auto space-y-16">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center space-y-4"
         >
-          <h1 className="text-4xl lg:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4">
-            <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              Education & Certifications
-            </span>
+          <span className="text-xs uppercase tracking-widest font-semibold text-amber-500">
+            Academics & Credentials
+          </span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display tracking-tight text-gray-900 dark:text-white">
+            Education & Certifications
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            My academic background and professional certifications that have shaped
-            my expertise in AI/ML and software development.
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Academic grounding and professional certifications underpinning my software engineering and data analytics journey.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-12">
-          {/* Education Section */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="lg:col-span-2 space-y-8"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
-              <FaGraduationCap className="text-purple-500" />
-              Academic Background
-            </h2>
+        {/* Education Section */}
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold font-display text-gray-900 dark:text-white flex items-center gap-2.5">
+            <FaGraduationCap className="text-amber-500 text-lg" />
+            Formal Education
+          </h2>
 
+          <div className="grid gap-6">
             {education.map((edu, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 hover:shadow-xl transition-all duration-300"
+                transition={{ duration: 0.7, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -4 }}
+                className="bg-white dark:bg-[#121215]/90 backdrop-blur-md rounded-2xl border border-gray-200/80 dark:border-white/5 shadow-xl p-8 hover:border-white/15 transition-all duration-300"
               >
-                <div className="flex gap-6">
-                  {/* Icon */}
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full flex items-center justify-center text-white">
-                      <FaGraduationCap className="text-xl" />
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 space-y-4">
-                    {/* Header */}
-                    <div>
-                      <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-1">
-                        {edu.degree}
-                      </h3>
-                      <p className="text-lg text-purple-600 dark:text-purple-400 font-medium mb-2">
-                        {edu.specialization}
-                      </p>
-                      <div className="flex flex-wrap items-center gap-4 text-gray-600 dark:text-gray-400">
-                        <span className="font-semibold">{edu.institution}</span>
-                        <div className="flex items-center gap-1">
-                          <FaCalendarAlt className="text-sm" />
-                          <span>{edu.period}</span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Description */}
-                    <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                      Currently pursuing Computer Science Engineering with specialization in Artificial Intelligence and Machine Learning.
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-gray-100 dark:border-white/5">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold font-display text-gray-900 dark:text-white">
+                      {edu.degree}
+                    </h3>
+                    <p className="text-sm font-semibold text-amber-500 mt-0.5">
+                      {edu.institution}
                     </p>
-
-                    {/* Achievements */}
-                    <div>
-                      <h4 className="font-semibold text-gray-900 dark:text-white mb-2">
-                        Key Achievements:
-                      </h4>
-                      <ul className="list-disc pl-5 space-y-1">
-                        {edu.achievements && edu.achievements.map((achievement, achievementIndex) => (
-                          <li key={achievementIndex} className="text-gray-600 dark:text-gray-400">
-                            {achievement}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
                   </div>
+                  <span className="flex items-center gap-1.5 text-xs font-medium text-gray-500 dark:text-gray-400">
+                    <FaCalendarAlt className="text-amber-500" />
+                    {edu.period}
+                  </span>
+                </div>
+
+                <div className="pt-5 space-y-3">
+                  <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Specialization: <span className="text-gray-900 dark:text-white font-semibold">{edu.specialization}</span>
+                  </p>
+                  <ul className="space-y-2">
+                    {edu.achievements.map((item, i) => (
+                      <li key={i} className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 flex items-start gap-2.5">
+                        <span className="text-amber-500 font-bold">▸</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
             ))}
-          </motion.div>
+          </div>
+        </div>
 
-          {/* Certifications Section */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="space-y-8"
-          >
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6 flex items-center gap-3">
-              <FaCertificate className="text-purple-500" />
-              Certifications
-            </h2>
+        {/* Certifications Section */}
+        <div className="space-y-6">
+          <h2 className="text-xl font-bold font-display text-gray-900 dark:text-white flex items-center gap-2.5">
+            <FaCertificate className="text-amber-500 text-base" />
+            Certifications & Training
+          </h2>
 
-            <div className="space-y-6">
-              {certifications.map((cert, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
-                  className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-300"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center text-white">
-                        <FaAward className="text-lg" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1">
-                        {cert.name}
-                      </h3>
-                      <p className="text-purple-600 dark:text-purple-400 font-medium mb-2">
-                        {cert.issuer}
-                      </p>
-                      <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
-                        <div className="flex items-center gap-1">
-                          <FaCalendarAlt className="text-xs" />
-                          <span>{cert.date}</span>
-                        </div>
-                        <span>•</span>
-                        <span className="font-mono text-xs">{cert.credential}</span>
-                      </div>
-                    </div>
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {certifications.map((cert, index) => (
+              <motion.div
+                key={cert.name}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.15 + index * 0.08, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ y: -4 }}
+                className="bg-white dark:bg-[#121215]/90 backdrop-blur-md rounded-2xl border border-gray-200/80 dark:border-white/5 shadow-xl p-7 hover:border-white/15 transition-all duration-300 flex flex-col justify-between"
+              >
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs text-gray-500">
+                    <span className="font-semibold text-amber-500 uppercase tracking-wider">{cert.issuer}</span>
+                    <span>{cert.date}</span>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-
-            {/* Achievement Stats */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-6 text-white"
-            >
-              <h3 className="text-xl font-bold mb-4">Academic Achievements</h3>
-              <div className="space-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">🏆</span>
-                  <span>Dean's List - 3 Semesters</span>
+                  <h3 className="text-lg font-bold font-display text-gray-900 dark:text-white">
+                    {cert.name}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                    {cert.credential}
+                  </p>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">🥇</span>
-                  <span>1st Place - College Hackathon 2022</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">⭐</span>
-                  <span>Top 5% - Machine Learning Course</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-2xl">📚</span>
-                  <span>Published Research Paper on NLP</span>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

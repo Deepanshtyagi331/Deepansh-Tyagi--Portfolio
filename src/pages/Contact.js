@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa';
 import Toast from '../components/Toast';
+import PageBackground3D from '../components/common/PageBackground3D';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -30,10 +31,8 @@ const Contact = () => {
 
   const getApiUrl = () => {
     if (process.env.NODE_ENV === 'production') {
-      // In production, use the deployed backend URL
       return 'https://deepanshtyagi.vercel.app/api/contact';
     } else {
-      // In development, use local backend
       return 'http://localhost:5001/api/contact';
     }
   };
@@ -68,137 +67,141 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20 px-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="relative min-h-[calc(100vh-5rem)] py-16 px-4 sm:px-6 lg:px-8">
+      {/* Interactive 3D Ambient Background */}
+      <PageBackground3D variant="contact" />
+
+      <div className="relative z-10 max-w-5xl mx-auto">
+        {toast && (
+          <Toast
+            type={toast.type}
+            message={toast.message}
+            onClose={hideToast}
+          />
+        )}
+
+        {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-16 space-y-4"
         >
-          <h1 className="text-4xl lg:text-5xl font-serif font-bold text-gray-900 dark:text-white mb-4">
-            <span className="bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-              Get In Touch
-            </span>
+          <span className="text-xs uppercase tracking-widest font-semibold text-amber-500">
+            Get In Touch
+          </span>
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-display tracking-tight text-gray-900 dark:text-white">
+            Let's Build Something Together
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            I'm always interested in hearing about new projects, opportunities, or collaborations.
-            Feel free to reach out if you'd like to connect!
+          <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            I'm always interested in hearing about new projects, technical challenges, and full-stack opportunities.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
-          {/* Contact Information */}
+        <div className="grid lg:grid-cols-12 gap-8 items-start">
+          {/* Contact Details & Social */}
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-8"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-5 space-y-6"
           >
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <div className="bg-white dark:bg-[#121215]/90 backdrop-blur-md rounded-2xl border border-gray-200/80 dark:border-white/5 shadow-xl p-8 space-y-6">
+              <h2 className="text-xl font-bold font-display text-gray-900 dark:text-white">
                 Contact Information
               </h2>
-              <div className="space-y-4">
+              
+              <div className="space-y-5 text-sm">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
-                    <FaEnvelope className="text-purple-600 dark:text-purple-400 text-lg" />
+                  <div className="w-10 h-10 bg-white/5 dark:bg-white/10 rounded-xl flex items-center justify-center text-amber-500 border border-white/10">
+                    <FaEnvelope className="text-sm" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">Email</p>
-                    <p className="text-gray-600 dark:text-gray-400">tyagideepansh60@gmail.com</p>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Email</p>
+                    <a href="mailto:tyagideepansh60@gmail.com" className="font-medium text-gray-900 dark:text-white hover:text-amber-500 transition-colors">
+                      tyagideepansh60@gmail.com
+                    </a>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
-                    <FaPhone className="text-purple-600 dark:text-purple-400 text-lg" />
+                  <div className="w-10 h-10 bg-white/5 dark:bg-white/10 rounded-xl flex items-center justify-center text-amber-500 border border-white/10">
+                    <FaPhone className="text-sm" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">Phone</p>
-                    <p className="text-gray-600 dark:text-gray-400">+91 7728076303</p>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Phone</p>
+                    <p className="font-medium text-gray-900 dark:text-white">+91 7728076303</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 rounded-full flex items-center justify-center">
-                    <FaMapMarkerAlt className="text-purple-600 dark:text-purple-400 text-lg" />
+                  <div className="w-10 h-10 bg-white/5 dark:bg-white/10 rounded-xl flex items-center justify-center text-amber-500 border border-white/10">
+                    <FaMapMarkerAlt className="text-sm" />
                   </div>
                   <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">Location</p>
-                    <p className="text-gray-600 dark:text-gray-400">Ghaziabad, Uttar Pradesh, India</p>
+                    <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Location</p>
+                    <p className="font-medium text-gray-900 dark:text-white">Ghaziabad, Uttar Pradesh, India</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            <div className="bg-white dark:bg-[#121215]/90 backdrop-blur-md rounded-2xl border border-gray-200/80 dark:border-white/5 shadow-xl p-8 space-y-4">
+              <h2 className="text-xl font-bold font-display text-gray-900 dark:text-white">
                 Social Profiles
               </h2>
-              <div className="space-y-4">
-                <a
+              <div className="flex items-center gap-4 pt-2">
+                <motion.a
                   href="https://github.com/Deepanshtyagi331"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors duration-300"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-11 h-11 bg-white/5 dark:bg-white/10 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all border border-white/10"
+                  aria-label="GitHub"
                 >
-                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                    <FaGithub className="text-gray-700 dark:text-gray-300 text-lg" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">GitHub</p>
-                    <p className="text-gray-600 dark:text-gray-400">github.com/Deepanshtyagi331</p>
-                  </div>
-                </a>
-
-                <a
+                  <FaGithub className="text-base" />
+                </motion.a>
+                <motion.a
                   href="https://www.linkedin.com/in/deepansh-tyagi-03110927a"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors duration-300"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-11 h-11 bg-white/5 dark:bg-white/10 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all border border-white/10"
+                  aria-label="LinkedIn"
                 >
-                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                    <FaLinkedin className="text-gray-700 dark:text-gray-300 text-lg" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">LinkedIn</p>
-                    <p className="text-gray-600 dark:text-gray-400">linkedin.com/in/deepansh-tyagi-03110927a</p>
-                  </div>
-                </a>
-
-                <a
+                  <FaLinkedin className="text-base" />
+                </motion.a>
+                <motion.a
                   href="https://twitter.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-3 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors duration-300"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-11 h-11 bg-white/5 dark:bg-white/10 rounded-full flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/20 transition-all border border-white/10"
+                  aria-label="Twitter"
                 >
-                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center">
-                    <FaTwitter className="text-gray-700 dark:text-gray-300 text-lg" />
-                  </div>
-                  <div>
-                    <p className="font-semibold text-gray-900 dark:text-white">Twitter</p>
-                    <p className="text-gray-600 dark:text-gray-400">@deepanshtyagi</p>
-                  </div>
-                </a>
+                  <FaTwitter className="text-base" />
+                </motion.a>
               </div>
             </div>
           </motion.div>
 
-          {/* Message Form */}
+          {/* Form */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.25, ease: [0.22, 1, 0.36, 1] }}
+            className="lg:col-span-7 bg-white dark:bg-[#121215]/90 backdrop-blur-md rounded-2xl border border-gray-200/80 dark:border-white/5 shadow-xl p-8 sm:p-9"
           >
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
-              Send Me a Message
+            <h2 className="text-xl font-bold font-display text-gray-900 dark:text-white mb-6">
+              Send a Message
             </h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Name
+                <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
+                  Your Name
                 </label>
                 <input
                   type="text"
@@ -207,14 +210,14 @@ const Contact = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors duration-300"
-                  placeholder="Your Name"
+                  placeholder="John Doe"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white text-sm focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-all"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                  Email
+                <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
+                  Email Address
                 </label>
                 <input
                   type="email"
@@ -223,13 +226,13 @@ const Contact = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors duration-300"
-                  placeholder="your.email@example.com"
+                  placeholder="john@example.com"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white text-sm focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-all"
                 />
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="subject" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
                   Subject
                 </label>
                 <input
@@ -239,49 +242,41 @@ const Contact = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors duration-300"
-                  placeholder="Project Discussion, Job Opportunity, etc."
+                  placeholder="Project inquiry / Collaboration"
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white text-sm focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-all"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wider text-gray-400 mb-2">
                   Message
                 </label>
                 <textarea
                   id="message"
                   name="message"
+                  rows="4"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={6}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent dark:bg-gray-700 dark:text-white transition-colors duration-300"
-                  placeholder="Tell me about your project or inquiry..."
+                  placeholder="Tell me about your idea or project..."
+                  className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-xl text-gray-900 dark:text-white text-sm focus:border-white focus:outline-none focus:ring-1 focus:ring-white transition-all resize-none"
                 />
               </div>
 
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                disabled={isSubmitting}
-                className="w-full px-6 py-3 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isSubmitting ? 'Sending...' : 'Send Message'}
-              </motion.button>
+              <div className="pt-2">
+                <motion.button
+                  whileHover={{ scale: 1.03, backgroundColor: '#ffffff', color: '#0c0c0e' }}
+                  whileTap={{ scale: 0.97 }}
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full py-3.5 px-8 rounded-full border border-gray-400 text-white font-medium text-sm transition-all duration-300 cursor-pointer select-none disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
+                </motion.button>
+              </div>
             </form>
           </motion.div>
         </div>
-        
-        {/* Toast Notification */}
-        {toast && (
-          <Toast
-            type={toast.type}
-            message={toast.message}
-            onClose={hideToast}
-            duration={5000}
-          />
-        )}
       </div>
     </div>
   );
